@@ -119,7 +119,7 @@ namespace HorseGame
 
         public void UpdateFace()
         {
-            if()
+            
         }
 
         public void SetMoveVector(Vector2 newMoveVector)
