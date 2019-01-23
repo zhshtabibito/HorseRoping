@@ -9,7 +9,7 @@ public class World : MonoBehaviour
     public int stateGame;
     public float timeMain;
 
-    public Horse horse;
+    public static Horse horse;
     public List<Player> players;
     
     // Start is called before the first frame update
@@ -24,29 +24,39 @@ public class World : MonoBehaviour
         yield return new WaitForSeconds(timeMain);
         Player winner = players[0];
         foreach (Player player in players)
-        {
             if (player.score > winner.score)
-            {
                 winner = player;
-            }
-        }
-        if(horse.state != winner.id)
-        {
-            stateGame = JIASHI;
-        }
-        else
-        {
-            GameOver(winner);
-        }
 
+        if (horse.state != winner.id && horse.state != 0)
+            stateGame = JIASHI;
+        else
+            GameOver(winner);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(stateGame == JIASHI)
-        {
 
+    }
+
+    public void CheckGameOver()
+    {
+        // called when score add
+        foreach (Player player in players)
+            if (player.score >= 100)
+                GameOver(player);
+    }
+
+    public void HandleHorseState()
+    {
+        // called when 
+        if (stateGame == JIASHI)
+        {
+            Player winner = players[0];
+            foreach (Player player in players)
+                if (player.score > winner.score)
+                    winner = player;
+            GameOver(winner);
         }
     }
 
