@@ -9,7 +9,18 @@ namespace HorseGame
     public class Horse : MonoBehaviour
     {
         public float moveSpeed = 1.0f;
-
+        /// <summary>
+        /// 0 = free
+        /// 1 - 4 = player
+        /// </summary>
+        public int state;
+        public enum MoveType
+        {
+            Idle = 0,
+            MoveRandom,
+            Pulled
+        }
+        public MoveType enumMoveType;
         public float raycastDistance = 0.1f;
         public LayerMask borderLayerMask;
 
@@ -67,21 +78,39 @@ namespace HorseGame
 
         public void MoveRandom()
         {
-            if (BorderCheck())
+            switch (enumMoveType)
             {
-                previousDirc = (previousDirc + 4) % 8;
-                m_MoveVector = m_MoveDiretion[previousDirc] * moveSpeed;
-            }
-            else
-            {
-                previousDirc = Random.Range(0, m_MoveDiretion.Length);
-                m_MoveVector = m_MoveDiretion[previousDirc] * moveSpeed;
+                case MoveType.Idle:
+                    {
+                        m_MoveVector = Vector3.zero;
+                    }
+                    break;
+                case MoveType.MoveRandom:
+                    {
+                        if (BorderCheck())
+                        {
+                            previousDirc = (previousDirc + 4) % 8;
+                            m_MoveVector = m_MoveDiretion[previousDirc] * moveSpeed;
+                        }
+                        else
+                        {
+                            previousDirc = Random.Range(0, m_MoveDiretion.Length);
+                            m_MoveVector = m_MoveDiretion[previousDirc] * moveSpeed;
+                        }
+                    }
+                    break;
+                case MoveType.Pulled:
+                    {
+
+                    }
+                    break;
             }
         }
 
         public void SetIdle()
         {
-            m_MoveVector = Vector2.zero;
+            //m_MoveVector = Vector2.zero;
+            enumMoveType = MoveType.Idle;
         }
 
         public bool BorderCheck()

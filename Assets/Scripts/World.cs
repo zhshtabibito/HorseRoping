@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using HorseGame;
 public class World : MonoBehaviour
 {
     public static int MAIN = 0;
