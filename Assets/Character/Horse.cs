@@ -21,6 +21,10 @@ namespace HorseGame
             Pulled
         }
         public MoveType enumMoveType;
+        /// <summary>
+        /// 加速衰减：突然给马加一个冲刺的之后的速度衰减程度
+        /// </summary>
+        public float attenuation;
         public float raycastDistance = 0.1f;
         public LayerMask borderLayerMask;
 
@@ -68,6 +72,11 @@ namespace HorseGame
         }
         private void FixedUpdate()
         {
+            if (enumMoveType == MoveType.Pulled)
+            {
+                float speed = Mathf.MoveTowards(m_MoveVector.magnitude, moveSpeed, attenuation * Time.deltaTime);
+                m_MoveVector *= speed;
+            }
             m_CharacterController2D.Move(m_MoveVector * Time.deltaTime);
         }
 
@@ -76,7 +85,7 @@ namespace HorseGame
             m_MoveVector = newMoveVector;
         }
 
-        public void MoveRandom()
+        public void UpdateMoveMode()
         {
             switch (enumMoveType)
             {
@@ -101,16 +110,27 @@ namespace HorseGame
                     break;
                 case MoveType.Pulled:
                     {
-
+                        
                     }
                     break;
             }
+        }
+
+        public void SetPulled(Vector2 direction, float speed)
+        {
+            enumMoveType = MoveType.Pulled;
+            m_MoveVector = direction.normalized * speed;
         }
 
         public void SetIdle()
         {
             //m_MoveVector = Vector2.zero;
             enumMoveType = MoveType.Idle;
+        }
+
+        public void SetMoveRandom()
+        {
+            enumMoveType = MoveType.MoveRandom;
         }
 
         public bool BorderCheck()
@@ -128,6 +148,7 @@ namespace HorseGame
 
             for (int i = 0; i < raycastStart.Length; i++)
             {
+                Debug.DrawLine(raycastStart[i], raycastStart[i] + raycastDirection[i] * raycastDistance);
                 if (Physics2D.Raycast(raycastStart[i], raycastDirection[i], raycastDistance, borderLayerMask))
                 {
                     return true;

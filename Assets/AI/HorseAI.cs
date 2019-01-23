@@ -6,6 +6,9 @@ using BTAI;
 namespace HorseGame
 {
     public class HorseAI : MonoBehaviour
+#if UNITY_EDITOR
+    , BTAI.IBTDebugable
+#endif
     {
         Animator m_Animator;
         Root m_Ai = BT.Root();
@@ -21,17 +24,19 @@ namespace HorseGame
             m_Ai.OpenBranch(
                 BT.RandomSequence().OpenBranch
                 (
-                    BT.Sequence().OpenBranch(
-                        BT.Call(m_Horse.MoveRandom),
-                        BT.Wait(Random.Range(1, 3))
-                    ),
-                    BT.Sequence().OpenBranch(
-                        BT.Call(m_Horse.SetIdle),
-                        BT.Wait(Random.Range(1, 3))
-                    )
+                BT.Sequence().OpenBranch(
+                    BT.Call(m_Horse.SetMoveRandom),
+                    BT.Call(m_Horse.UpdateMoveMode),
+                    BT.Wait(Random.Range(1, 3))
+                ),
+                BT.Sequence().OpenBranch(
+                    BT.Call(m_Horse.SetIdle),
+                    BT.Call(m_Horse.UpdateMoveMode),
+                    BT.Wait(Random.Range(1, 3))
+                )
                 )
             //BT.If(() => { return m_Horse.BorderCheck() == false; }).OpenBranch(
-            //    BT.Call(m_Horse.MoveRandom)
+            //    BT.Call(m_Horse.UpdateMoveMode)
             //    //BT.Wait(Random.Range(1, 3))
             //    )
 
@@ -48,10 +53,15 @@ namespace HorseGame
             //)
             );
         }
-
         private void Update()
         {
             m_Ai.Tick();
         }
+#if UNITY_EDITOR
+        public BTAI.Root GetAIRoot()
+        {
+            return m_Ai;
+        }
+#endif
     }
 }
