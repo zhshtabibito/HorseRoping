@@ -13,24 +13,40 @@ public class Player : MonoBehaviour
     public int score = 0;
     public int state = 0;
 
-    public float spd;
+    public float spd0;
+    private float spd;
     public float lenRope;
+
+    private Rigidbody2D rb;
 
     public GameObject AimerObj;
     private Aimer aimer;
 
-    private bool canDash; private float cdDash; private float vDash;
-    private bool canPull; private float cdPull; private float disPull;
+    private bool canDash;
+    private float cdDash = 8f;
+    private float rateDash = 3f;
+    private float timeDash = 1f;
+
+    private bool canPull;
+    private float cdPull = 8f;
+    // private float ratePull = 1 / 3;
 
     // Start is called before the first frame update
     void Start()
     {
+        spd = spd0;
         aimer = AimerObj.GetComponent<Aimer>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (spd > spd0)
+            spd -= spd0 * (rateDash - 1) * Time.deltaTime / timeDash;
+        if (spd < spd0)
+            spd = spd0;
+
         // for test on PC
         //***********************************************
         Vector2 v = Vector2.zero;
@@ -38,7 +54,7 @@ public class Player : MonoBehaviour
         {
             float LR = Input.GetKey(KeyCode.D) ? 1 : Input.GetKey(KeyCode.A) ? -1 : 0;
             float UD = Input.GetKey(KeyCode.W) ? 1 : Input.GetKey(KeyCode.S) ? -1 : 0;
-            transform.position += new Vector3(LR * spd * Time.deltaTime, UD * spd * Time.deltaTime, 0);
+            rb.MovePosition(rb.position + new Vector2(LR, UD) * spd * Time.deltaTime);
 
             if (Input.GetKey(KeyCode.Space) && (state == FREE || state == CHARGING))
             {
@@ -57,14 +73,17 @@ public class Player : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && state==ROPING)
             {
                 // Dash
-
+                DashCD();
+                spd *= rateDash;
 
             }
 
             if (Input.GetKeyDown(KeyCode.C) && canPull && state == ROPING)
             {
                 // Pull
-
+                PullCD();
+                // Vector3 rope = World.horse.transform.position - transform.position;
+                // World.horse.SetMoveVector(-rope.normalized * lenRope * ratePull);
             }
 
         }
