@@ -11,9 +11,9 @@ public class Aimer : MonoBehaviour
 
     public float R;
     private readonly float Rmin = 1;
-    private readonly float Rmax;
-    public readonly float spd = 5;
-    public readonly float step = 0.5f;
+    private readonly float Rmax = 3;
+    private readonly float spd = 5;
+    private readonly float step = 0.8f;
 
 
     // Start is called before the first frame update
@@ -72,5 +72,10 @@ public class Aimer : MonoBehaviour
         R += step*Time.deltaTime;
         if (R > Rmax)
             R = Rmax;
+    }
+
+    public float CalDelay()
+    {
+        return 0.8f-0.2f*(R-Rmin)/step;
     }
 }

@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     private static int CHARGING = 1;
     private static int ROPING = 2;
     private static int DIZZY = 3;
+    private static int THROWING = 4;
 
     public int id;
     public int score = 0;
@@ -61,13 +62,9 @@ public class Player : MonoBehaviour
                 state = CHARGING;
                 aimer.AddR();
             }
-            else if (Input.GetKeyUp(KeyCode.Space))
+            else if (Input.GetKeyUp(KeyCode.Space) && state == CHARGING)
             {
-                if((World.horse.transform.position - aimer.transform.position).magnitude <= aimer.R)
-                {
-                    // horse roped
-
-                }
+                StartCoroutine("RopeHorse");
             }
 
             if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && state==ROPING)
@@ -77,8 +74,7 @@ public class Player : MonoBehaviour
                 spd *= rateDash;
 
             }
-
-            if (Input.GetKeyDown(KeyCode.C) && canPull && state == ROPING)
+            else if (Input.GetKeyDown(KeyCode.C) && canPull && state == ROPING)
             {
                 // Pull
                 PullCD();
@@ -110,6 +106,19 @@ public class Player : MonoBehaviour
         canPull = false;
         yield return new WaitForSeconds(cdPull);
         canPull = true;
+    }
+
+    IEnumerator RopeHorse()
+    {
+        state = THROWING;
+        yield return new WaitForSeconds(aimer.CalDelay());
+        if ((World.horse.transform.position - aimer.transform.position).magnitude <= aimer.R)
+        {
+            state = ROPING;
+            // horse roped
+        }
+
+
     }
 
 }
