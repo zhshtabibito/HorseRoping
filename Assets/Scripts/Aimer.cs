@@ -27,7 +27,7 @@ public class Aimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(player.state == 0) // not roping
+        if(player.state <=1 && player.id == 1) // not roping
         {
             // PC test
             //***********************************************
@@ -51,6 +51,7 @@ public class Aimer : MonoBehaviour
 
     public void ResetAimer()
     {
+        Debug.Log("Aimer reset");
         R = Rmin;
         Vector3 temp = transform.position - new Vector3(R, 0, 0);
         arrowL.transform.position = transform.position - new Vector3(R, 0, 0);
