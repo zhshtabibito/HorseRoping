@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8359313659122258094}
   - component: {fileID: 8359313659122258098}
   - component: {fileID: 8359313659122258099}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Horse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6d0bd6eeaa4de0b4ca72843abaefa790, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dabef6c4d716a4043bb65e4c9ce48354, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -113,9 +113,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 8359313659122258102}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3cbf16cc8e08a64bbbbb577b28fc78e, type: 3}
+  m_Script: {fileID: 11500000, guid: 9dc6bca24b5138444b448a71534c5fcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 1
+  state: 0
+  enumMoveType: 0
+  attenuation: 0
+  raycastDistance: 0.1
+  borderLayerMask:
+    serializedVersion: 2
+    m_Bits: 512
+  m_MoveVector: {x: 0, y: 0, z: 0}
+  previousDirc: 0
 --- !u!114 &8359313659122258092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,7 +135,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8359313659122258102}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a02b9eee9fd54b42a15b81be3c43e51, type: 3}
+  m_Script: {fileID: 11500000, guid: f27e2b0042459b2488e6f969c6af0147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &8359313659122258094
@@ -137,19 +147,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8359313659122258102}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2169d2a3afebf0242844538751b9584a, type: 3}
+  m_Script: {fileID: 11500000, guid: 18737dfbba4b40f479b5b04de8202fd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
-  state: 0
-  enumMoveType: 1
-  attenuation: 10
-  raycastDistance: 0.1
-  borderLayerMask:
-    serializedVersion: 2
-    m_Bits: 512
-  m_MoveVector: {x: 0, y: 0, z: 0}
-  previousDirc: 0
 --- !u!50 &8359313659122258098
 Rigidbody2D:
   serializedVersion: 4
