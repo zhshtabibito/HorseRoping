@@ -28,6 +28,7 @@ namespace HorseGame
         public float raycastDistance = 0.1f;
         public float pulledSpeed = 2f;
         public LayerMask borderLayerMask;
+        public bool isOriginLeft = true;
 
         [SerializeField]
         protected Vector2 m_MoveVector;
@@ -35,6 +36,8 @@ namespace HorseGame
         protected CharacterController2D m_CharacterController2D;
         protected CapsuleCollider2D m_CapsuleCollider2D;
         protected ContactFilter2D m_ContactFilter;
+        protected Rigidbody2D m_Rigidbody2D;
+        protected SpriteRenderer m_SpriteRenderer;
         protected Vector2[] m_MoveDiretion = new Vector2[8]
         {
             new Vector2(1, 0),
@@ -72,6 +75,7 @@ namespace HorseGame
         {
             m_CharacterController2D = GetComponent<CharacterController2D>();
             m_CapsuleCollider2D = GetComponent<CapsuleCollider2D>();
+            m_Rigidbody2D = GetComponent<Rigidbody2D>();
             m_ContactFilter.layerMask = borderLayerMask;
             m_ContactFilter.useLayerMask = true;
             m_ContactFilter.useTriggers = false;
@@ -111,6 +115,11 @@ namespace HorseGame
         private void FixedUpdate()
         { 
             m_CharacterController2D.Move(m_MoveVector * Time.deltaTime);
+        }
+
+        public void UpdateFace()
+        {
+            if()
         }
 
         public void SetMoveVector(Vector2 newMoveVector)
@@ -196,5 +205,11 @@ namespace HorseGame
             }
             return false;
         }
+
+        public Vector2 GetPosition()
+        {
+            return m_Rigidbody2D.position;
+        }
+
     }
 }
