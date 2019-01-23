@@ -27,14 +27,25 @@ public class Aimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(player.state <=1 && player.id == 1) // not roping
+        float LR, UD;
+        if(player.state <=1) // not roping
         {
             // PC test
-            //***********************************************
+            /***********************************************
             float LR = Input.GetKey(KeyCode.RightArrow) ? 1 : Input.GetKey(KeyCode.LeftArrow) ? -1 : 0;
             float UD = Input.GetKey(KeyCode.UpArrow) ? 1 : Input.GetKey(KeyCode.DownArrow) ? -1 : 0;
+            ***********************************************/
+            if(player.id == 1)
+            {
+                LR = Input.GetAxis("Horizontal_P1R");
+                UD = Input.GetAxis("Vertical_P1R");
+            }
+            else // player.id == 2
+            {
+                LR = Input.GetAxis("Horizontal_P2R");
+                UD = Input.GetAxis("Vertical_P2R");
+            }
             transform.position += new Vector3(LR * spd * Time.deltaTime, UD * spd * Time.deltaTime, 0);
-            //***********************************************
             Vector3 rope = transform.position - player.transform.position;
             float mag = rope.magnitude;
             if(mag > player.lenRope)
@@ -45,8 +56,6 @@ public class Aimer : MonoBehaviour
             arrowL.transform.position = transform.position - new Vector3(R, 0, 0);
             arrowR.transform.position = transform.position + new Vector3(R, 0, 0);
         }
-
-
     }
 
     public void ResetAimer()

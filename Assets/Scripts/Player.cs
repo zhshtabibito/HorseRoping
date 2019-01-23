@@ -51,43 +51,66 @@ public class Player : MonoBehaviour
         if (spd < spd0)
             spd = spd0;
 
-        // for test on PC
-        //***********************************************
+
         Vector2 v = Vector2.zero;
-        if (id == 1 && state != DIZZY)
+        if (state != DIZZY)
         {
+            float LR, UD;
+            // for test on PC
+            /***********************************************
             float LR = Input.GetKey(KeyCode.D) ? 1 : Input.GetKey(KeyCode.A) ? -1 : 0;
             float UD = Input.GetKey(KeyCode.W) ? 1 : Input.GetKey(KeyCode.S) ? -1 : 0;
+            **************************************************/
+            if (id == 1)
+            {
+                LR = Input.GetAxis("Horizontal_P1L");
+                UD = Input.GetAxis("Vertical_P1L");
+            }
+            else // id == 2
+            {
+                LR = Input.GetAxis("Horizontal_P1L");
+                UD = Input.GetAxis("Vertical_P1L");
+            }
             rb.MovePosition(rb.position + new Vector2(LR, UD) * spd * Time.deltaTime);
 
-            // charing and rope
-            if (Input.GetKey(KeyCode.Space) && (state == FREE || state == CHARGING))
+            // charging and rope
+            if (((id==1) ? // ZR press charge
+                Input.GetKey(KeyCode.Joystick2Button15) :
+                Input.GetKey(KeyCode.Joystick4Button15)) &&
+                (state == FREE || state == CHARGING))
             {
                 state = CHARGING;
                 aimer.AddR();
             }
-            else if (Input.GetKeyUp(KeyCode.Space) && state == CHARGING && canRope)
+            else if (((id==1) ? // ZR release rope
+                Input.GetKeyUp(KeyCode.Joystick2Button15) :
+                Input.GetKeyUp(KeyCode.Joystick4Button15)) &&
+                state == CHARGING && canRope)
             {
                 StartCoroutine("RopeHorse");
             }
+
             // skill dash n pull
-            if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && state==ROPING)
+            if (((id==1)? // X dash
+                Input.GetKey(KeyCode.Joystick2Button1) :
+                Input.GetKey(KeyCode.Joystick4Button1)) &&
+                canDash && state==ROPING)
             {
-                // Dash
                 DashCD();
                 spd *= rateDash;
-
             }
-            else if (Input.GetKeyDown(KeyCode.C) && canPull && state == ROPING)
+            else if (((id == 1) ? // Y pull
+                Input.GetKey(KeyCode.Joystick2Button3) :
+                Input.GetKey(KeyCode.Joystick4Button3)) &&
+                canPull && state == ROPING)
             {
-                // Pull
+                World.horse.SetPulled(rb.position - World.horse.GetPosition(), spd * rateDash * 2);
                 PullCD();
                 // Vector3 rope = World.horse.transform.position - transform.position;
                 // World.horse.SetMoveVector(-rope.normalized * lenRope * ratePull);
             }
 
         }
-        //************************************************
 
         // horse too far while roping
         if (state == ROPING)
