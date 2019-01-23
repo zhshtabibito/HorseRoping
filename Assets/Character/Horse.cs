@@ -26,10 +26,11 @@ namespace HorseGame
         /// </summary>
         public float attenuation;
         public float raycastDistance = 0.1f;
+        public float pulledSpeed = 2f;
         public LayerMask borderLayerMask;
 
         [SerializeField]
-        protected Vector3 m_MoveVector;
+        protected Vector2 m_MoveVector;
 
         protected CharacterController2D m_CharacterController2D;
         protected CapsuleCollider2D m_CapsuleCollider2D;
@@ -45,7 +46,22 @@ namespace HorseGame
             new Vector2(0, -1),
             new Vector2(-(float)1.414, (float)1.414),
         };
-        public int previousDirc = 0;
+        /// <summary>
+        /// 当射线检测到边缘时，需要获取当前的移动方向previousDirc，然后根据该数值将方向置反
+        /// </summary>
+        protected int previousDirc = 0;
+        /// <summary>
+        /// 强制导航状态：当射线检测到边缘时，设置为强制导航状态
+        /// </summary>
+        [SerializeField] protected bool isBorderNavigation = false;
+        /// <summary>
+        /// 强制导航持续时间
+        /// </summary>
+        [SerializeField] protected float navTime = 2.0f;
+        /// <summary>
+        /// 强制导航已持续时间
+        /// </summary>
+        protected float navTimeLast = 0f;
 
         public Vector2[] MoveDiretion
         {
@@ -66,17 +82,34 @@ namespace HorseGame
         }
 
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
-
-        }
-        private void FixedUpdate()
-        {
+            if (BorderCheck() && isBorderNavigation == false)
+            {
+                previousDirc = (previousDirc + 4) % 8;
+                m_MoveVector = m_MoveDiretion[previousDirc] * moveSpeed;
+                isBorderNavigation = true;
+            }
+            else
+            {
+                if (navTime - navTimeLast < 0)
+                {
+                    navTimeLast = 0;
+                    isBorderNavigation = false;
+                }
+                else
+                {
+                    navTimeLast += Time.deltaTime;
+                }
+            }
             if (enumMoveType == MoveType.Pulled)
             {
-                float speed = Mathf.MoveTowards(m_MoveVector.magnitude, moveSpeed, attenuation * Time.deltaTime);
-                m_MoveVector *= speed;
+                //float speed = Mathf.MoveTowards(m_MoveVector.magnitude, moveSpeed, attenuation * Time.deltaTime);
+                m_MoveVector = m_MoveVector * Mathf.Max((m_MoveVector.magnitude - attenuation) / m_MoveVector.magnitude, moveSpeed / m_MoveVector.magnitude);
             }
+        }
+        private void FixedUpdate()
+        { 
             m_CharacterController2D.Move(m_MoveVector * Time.deltaTime);
         }
 
@@ -91,17 +124,13 @@ namespace HorseGame
             {
                 case MoveType.Idle:
                     {
-                        m_MoveVector = Vector3.zero;
+                        m_MoveVector = Vector2.zero;
                     }
                     break;
                 case MoveType.MoveRandom:
                     {
-                        if (BorderCheck())
-                        {
-                            previousDirc = (previousDirc + 4) % 8;
-                            m_MoveVector = m_MoveDiretion[previousDirc] * moveSpeed;
-                        }
-                        else
+                        //当不处于强制导航状态时，随机选择方向
+                        if (!isBorderNavigation)
                         {
                             previousDirc = Random.Range(0, m_MoveDiretion.Length);
                             m_MoveVector = m_MoveDiretion[previousDirc] * moveSpeed;
@@ -114,6 +143,13 @@ namespace HorseGame
                     }
                     break;
             }
+        }
+
+        public void SetPulled()
+        {
+            Debug.Log("Wow");
+            Vector2 direction = MoveDiretion[Random.Range(0, 8)];
+            SetPulled(direction, pulledSpeed);
         }
 
         public void SetPulled(Vector2 direction, float speed)
@@ -142,13 +178,17 @@ namespace HorseGame
             raycastStart[2] = m_CapsuleCollider2D.bounds.center + new Vector3(-m_CapsuleCollider2D.bounds.extents.x, 0, 0);
             raycastStart[3] = m_CapsuleCollider2D.bounds.center + new Vector3(m_CapsuleCollider2D.bounds.extents.x, 0, 0);
             raycastDirection[0] = new Vector2(0, 1);
-            raycastDirection[0] = new Vector2(0, -1);
-            raycastDirection[0] = new Vector2(-1, 0);
-            raycastDirection[0] = new Vector2(1, 0);
+            raycastDirection[1] = new Vector2(0, -1);
+            raycastDirection[2] = new Vector2(-1, 0);
+            raycastDirection[3] = new Vector2(1, 0);
 
             for (int i = 0; i < raycastStart.Length; i++)
             {
                 Debug.DrawLine(raycastStart[i], raycastStart[i] + raycastDirection[i] * raycastDistance);
+                //Debug.DrawRay(raycastStart[i], raycastDirection[i], Color.green);
+            }
+            for (int i = 0; i < raycastStart.Length; i++)
+            {
                 if (Physics2D.Raycast(raycastStart[i], raycastDirection[i], raycastDistance, borderLayerMask))
                 {
                     return true;

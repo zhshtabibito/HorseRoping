@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -38,7 +39,7 @@ namespace HorseGame
             m_PreviousPosition = m_Rigidbody2D.position;
             m_CurrentPosition = m_PreviousPosition + m_NextMovement;
             //Velocity = (m_CurrentPosition - m_PreviousPosition) / Time.deltaTime;
-
+            Debug.Log(m_PreviousPosition + ", " + m_NextMovement);
             m_Rigidbody2D.MovePosition(m_CurrentPosition);
             m_NextMovement = Vector2.zero;
         }

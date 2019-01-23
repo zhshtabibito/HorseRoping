@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8359313659122258094}
   - component: {fileID: 8359313659122258098}
   - component: {fileID: 8359313659122258099}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Horse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ Animator:
   m_GameObject: {fileID: 8359313659122258102}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 149122c81994459479f429c7ee2548d2, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -143,13 +143,15 @@ MonoBehaviour:
   moveSpeed: 1
   state: 0
   enumMoveType: 1
-  attenuation: 10
-  raycastDistance: 0.1
+  attenuation: 1
+  raycastDistance: 0.2
+  pulledSpeed: 5
   borderLayerMask:
     serializedVersion: 2
     m_Bits: 512
-  m_MoveVector: {x: 0, y: 0, z: 0}
-  previousDirc: 0
+  m_MoveVector: {x: 0, y: 0}
+  isBorderNavigation: 0
+  navTime: 2
 --- !u!50 &8359313659122258098
 Rigidbody2D:
   serializedVersion: 4
