@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using HorseGame;
 
 public class Player : MonoBehaviour
 {
@@ -34,7 +35,7 @@ public class Player : MonoBehaviour
 
     private bool canRope = true;
     private float cdRope = 1f;
-
+    
     protected Animator m_Animator;
     protected readonly int m_HashSpeedXPara = Animator.StringToHash("Speed_X");
     protected readonly int m_HashSpeedYPara = Animator.StringToHash("Speed_Y");
@@ -47,13 +48,16 @@ public class Player : MonoBehaviour
     protected float speedX;
     protected float speedY;
     protected float Direction;
+    protected Vector2 m_MoveVector;
+    protected CharacterController2D m_CharacterController2D;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         spd = spd0;
         aimer = AimerObj.GetComponent<Aimer>();
         rb = GetComponent<Rigidbody2D>();
+        m_CharacterController2D = GetComponent<CharacterController2D>();
     }
 
     // Update is called once per frame
@@ -84,7 +88,7 @@ public class Player : MonoBehaviour
                 LR = Input.GetAxis("Horizontal_P2L");
                 UD = -Input.GetAxis("Vertical_P2L");
             }
-            rb.MovePosition(rb.position + new Vector2(LR, UD) * spd * Time.deltaTime);
+            m_MoveVector = new Vector2(LR, UD) * spd;
 
             // charging and rope
             if (((id==1) ? // ZR press charge
@@ -145,7 +149,7 @@ public class Player : MonoBehaviour
 
         }
 
-
+        m_CharacterController2D.Move(m_MoveVector * Time.deltaTime);
     }
 
     public void BeDizzy()
