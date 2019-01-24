@@ -39,6 +39,7 @@ namespace HorseGame
         protected Rigidbody2D m_Rigidbody2D;
         protected SpriteRenderer m_SpriteRenderer;
         protected Animator m_Animator;
+        protected HorseAutio m_HorseAutio;
 
         protected Vector2[] m_MoveDiretion = new Vector2[8]
         {
@@ -83,6 +84,7 @@ namespace HorseGame
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
             m_SpriteRenderer = GetComponent<SpriteRenderer>();
             m_Animator = GetComponent<Animator>();
+            m_HorseAutio = GetComponent<HorseAutio>();
             m_ContactFilter.layerMask = borderLayerMask;
             m_ContactFilter.useLayerMask = true;
             m_ContactFilter.useTriggers = false;
@@ -226,6 +228,7 @@ namespace HorseGame
         {
             m_Animator.SetBool(m_HashCatchingPara, true);
             m_Animator.SetBool(m_HashCatchedPara, true);
+            m_HorseAutio.PlayCatching();
             //if (state == 0)
             //{
             //    m_Animator.SetBool(m_HashCatchingPara, true);
@@ -240,6 +243,7 @@ namespace HorseGame
         {
             m_Animator.SetBool(m_HashCatchedPara, false);
             m_Animator.SetBool(m_HashCatchingPara, false);
+            m_HorseAutio.PlayRelease();
         }
     }
 }

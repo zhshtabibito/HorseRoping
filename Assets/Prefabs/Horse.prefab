@@ -14,10 +14,11 @@ GameObject:
   - component: {fileID: 7686568104901086122}
   - component: {fileID: 7686568104901086121}
   - component: {fileID: 7686568104901086120}
+  - component: {fileID: 6115233458808279470}
   - component: {fileID: 7686568104901086113}
   - component: {fileID: 7686568104901086126}
   m_Layer: 8
-  m_Name: Horse 1
+  m_Name: Horse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -121,7 +122,7 @@ MonoBehaviour:
   enumMoveType: 0
   attenuation: 0
   raycastDistance: 0.1
-  pulledSpeed: 4
+  pulledSpeed: 3
   borderLayerMask:
     serializedVersion: 2
     m_Bits: 768
@@ -153,6 +154,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18737dfbba4b40f479b5b04de8202fd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6115233458808279470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7686568104901086127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 381fb2058baa36346acb551b6050fd25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Catching: {fileID: 8300000, guid: 8708e3311f6845142b5ed9caa3bff2f0, type: 3}
+  Release: {fileID: 8300000, guid: cd1e936a36c0fa44b85597ddb7561a44, type: 3}
+  audioSource: {fileID: 0}
 --- !u!50 &7686568104901086113
 Rigidbody2D:
   serializedVersion: 4
