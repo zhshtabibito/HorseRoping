@@ -412,61 +412,6 @@ PolygonCollider2D:
       - {x: -0.64, y: -0.64}
       - {x: 0.64, y: -0.64}
       - {x: 0.64, y: 0.64}
---- !u!1 &80070325 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4499518899236984830, guid: 678aa13d513c7aa47b5199e49135a373,
-    type: 3}
-  m_PrefabInstance: {fileID: 907828112}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &80070328
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 80070325}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18737dfbba4b40f479b5b04de8202fd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &80070329
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 80070325}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f27e2b0042459b2488e6f969c6af0147, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &80070330
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 80070325}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9dc6bca24b5138444b448a71534c5fcd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 1
-  state: 0
-  enumMoveType: 0
-  attenuation: 0
-  raycastDistance: 0.1
-  pulledSpeed: 2
-  borderLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  isOriginLeft: 1
-  m_MoveVector: {x: 0, y: 0}
-  isBorderNavigation: 0
-  navTime: 2
 --- !u!1 &302620419
 GameObject:
   m_ObjectHideFlags: 0
@@ -1469,7 +1414,7 @@ PrefabInstance:
     - target: {fileID: 7686568104901086116, guid: f9bcdd58a7a65b445b16b9d7cf0b319c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7686568104901086116, guid: f9bcdd58a7a65b445b16b9d7cf0b319c,
         type: 3}
