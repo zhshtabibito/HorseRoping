@@ -37,12 +37,12 @@ public class Aimer : MonoBehaviour
             ***********************************************/
             if(player.id == 1)
             {
-                LR = Input.GetAxis("Horizontal_P1R");
+                LR = -Input.GetAxis("Horizontal_P1R");
                 UD = Input.GetAxis("Vertical_P1R");
             }
             else // player.id == 2
             {
-                LR = Input.GetAxis("Horizontal_P2R");
+                LR = -Input.GetAxis("Horizontal_P2R");
                 UD = Input.GetAxis("Vertical_P2R");
             }
             transform.position += new Vector3(LR * spd * Time.deltaTime, UD * spd * Time.deltaTime, 0);

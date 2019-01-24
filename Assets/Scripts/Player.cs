@@ -64,12 +64,12 @@ public class Player : MonoBehaviour
             if (id == 1)
             {
                 LR = Input.GetAxis("Horizontal_P1L");
-                UD = Input.GetAxis("Vertical_P1L");
+                UD = -Input.GetAxis("Vertical_P1L");
             }
             else // id == 2
             {
-                LR = Input.GetAxis("Horizontal_P1L");
-                UD = Input.GetAxis("Vertical_P1L");
+                LR = Input.GetAxis("Horizontal_P2L");
+                UD = -Input.GetAxis("Vertical_P2L");
             }
             rb.MovePosition(rb.position + new Vector2(LR, UD) * spd * Time.deltaTime);
 
