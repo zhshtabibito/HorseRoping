@@ -43,13 +43,7 @@ public class Player : MonoBehaviour
     protected readonly int m_HashDirectionPara = Animator.StringToHash("Direction");
     protected readonly int m_HashDashPara = Animator.StringToHash("Dash");
     protected readonly int m_HashPullPara = Animator.StringToHash("Pull");
-   
     protected readonly int m_HashDizzyPara = Animator.StringToHash("Dizzy");
-
-    protected float speedX;
-    protected float speedY;
-    protected float direction;
-
     protected Vector2 m_MoveVector;
     protected CharacterController2D m_CharacterController2D;
 
@@ -71,7 +65,6 @@ public class Player : MonoBehaviour
             spd -= spd0 * (rateDash - 1) * Time.deltaTime / timeDash;
         if (spd < spd0)
             spd = spd0;
-
 
         Vector2 v = Vector2.zero;
         if (state != DIZZY)
@@ -118,6 +111,7 @@ public class Player : MonoBehaviour
                 canDash && state==ROPING)
             {
                 DashCD();
+                m_Animator.SetBool(m_HashDashPara, true);
                 spd *= rateDash;
             }
             else if (((id == 1) ? // Y pull
@@ -127,6 +121,7 @@ public class Player : MonoBehaviour
             {
                 World.horse.SetPulled(rb.position - World.horse.GetPosition(), spd * rateDash * 2);
                 PullCD();
+                m_Animator.SetBool(m_HashPullPara, true);
                 // Vector3 rope = World.horse.transform.position - transform.position;
                 // World.horse.SetMoveVector(-rope.normalized * lenRope * ratePull);
             }
@@ -154,6 +149,13 @@ public class Player : MonoBehaviour
         }
 
         m_CharacterController2D.Move(m_MoveVector * Time.deltaTime);
+        m_Animator.SetFloat(m_HashSpeedXPara, m_MoveVector.x);
+        m_Animator.SetFloat(m_HashSpeedYPara, m_MoveVector.y);
+        m_Animator.SetFloat(m_HashDirectionPara,
+            (m_MoveVector.y > 0 && m_MoveVector.y >= m_MoveVector.x && m_MoveVector.y >= -m_MoveVector.x) ? 0 :
+            (m_MoveVector.y < 0 && -m_MoveVector.y >= m_MoveVector.x && -m_MoveVector.y >= -m_MoveVector.x) ? (1 / 3) :
+            (m_MoveVector.x < 0 && -m_MoveVector.x >= m_MoveVector.y && -m_MoveVector.x >= -m_MoveVector.y) ? (2 / 3) : 1);
+
     }
 
     public void BeDizzy()
@@ -197,6 +199,8 @@ public class Player : MonoBehaviour
         state = THROWING;
         aimer.HideAimer();
         // play anime
+        m_PlayerAudio.PlayThrow();
+ 
         yield return new WaitForSeconds(aimer.CalDelay());
         Player enemy = World.players[2 - id];
         if ((enemy.transform.position - aimer.transform.position).magnitude <= aimer.R)
@@ -205,6 +209,8 @@ public class Player : MonoBehaviour
             state = FREE;
             Debug.Log("Player roped!");
             enemy.BeDizzy();
+            enemy.m_Animator.SetBool(m_HashDizzyPara, true);
+            enemy.m_PlayerAudio.PlayDize();
             World.horse.state = 0;
             World.HandleHorseState();
             StartCoroutine("RopeCD");
