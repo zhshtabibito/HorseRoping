@@ -48,7 +48,8 @@ public class Player : MonoBehaviour
 
     protected float speedX;
     protected float speedY;
-    protected float Direction;
+    protected float direction;
+
     protected Vector2 m_MoveVector;
     protected CharacterController2D m_CharacterController2D;
 

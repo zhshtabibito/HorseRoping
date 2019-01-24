@@ -169,7 +169,6 @@ namespace HorseGame
 
         public void SetPulled()
         {
-            Debug.Log("Wow");
             Vector2 direction = MoveDiretion[Random.Range(0, 8)];
             SetPulled(direction, pulledSpeed);
         }
