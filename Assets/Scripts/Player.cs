@@ -35,6 +35,19 @@ public class Player : MonoBehaviour
     private bool canRope = true;
     private float cdRope = 1f;
 
+    protected Animator m_Animator;
+    protected readonly int m_HashSpeedXPara = Animator.StringToHash("Speed_X");
+    protected readonly int m_HashSpeedYPara = Animator.StringToHash("Speed_Y");
+    protected readonly int m_HashDirectionPara = Animator.StringToHash("Direction");
+    protected readonly int m_HashDashPara = Animator.StringToHash("Dash");
+    protected readonly int m_HashPullPara = Animator.StringToHash("Pull");
+   
+    protected readonly int m_HashDizzyPara = Animator.StringToHash("Dizzy");
+
+    protected float speedX;
+    protected float speedY;
+    protected float Direction;
+
     // Start is called before the first frame update
     void Start()
     {
