@@ -38,6 +38,8 @@ namespace HorseGame
         protected ContactFilter2D m_ContactFilter;
         protected Rigidbody2D m_Rigidbody2D;
         protected SpriteRenderer m_SpriteRenderer;
+        protected Animator m_Animator;
+
         protected Vector2[] m_MoveDiretion = new Vector2[8]
         {
             new Vector2(1, 0),
@@ -66,6 +68,9 @@ namespace HorseGame
         /// </summary>
         protected float navTimeLast = 0f;
 
+        protected readonly int m_HashSpeedPara = Animator.StringToHash("Speed");
+        protected readonly int m_HashCatchingPara = Animator.StringToHash("Catching");
+        protected readonly int m_HashCatchedPara = Animator.StringToHash("Catched");
         public Vector2[] MoveDiretion
         {
             get { return m_MoveDiretion; }
@@ -76,6 +81,8 @@ namespace HorseGame
             m_CharacterController2D = GetComponent<CharacterController2D>();
             m_CapsuleCollider2D = GetComponent<CapsuleCollider2D>();
             m_Rigidbody2D = GetComponent<Rigidbody2D>();
+            m_SpriteRenderer = GetComponent<SpriteRenderer>();
+            m_Animator = GetComponent<Animator>();
             m_ContactFilter.layerMask = borderLayerMask;
             m_ContactFilter.useLayerMask = true;
             m_ContactFilter.useTriggers = false;
@@ -88,6 +95,7 @@ namespace HorseGame
         // Update is called once per frame
         private void Update()
         {
+            UpdateFace();
             if (BorderCheck() && isBorderNavigation == false)
             {
                 previousDirc = (previousDirc + 4) % 8;
@@ -113,13 +121,16 @@ namespace HorseGame
             }
         }
         private void FixedUpdate()
-        { 
+        {
             m_CharacterController2D.Move(m_MoveVector * Time.deltaTime);
         }
 
         public void UpdateFace()
         {
-            if()
+            if (isOriginLeft)
+                m_SpriteRenderer.flipX = m_MoveVector.x > 0 ? true : false;
+            else
+                m_SpriteRenderer.flipX = m_MoveVector.x > 0 ? false : true;
         }
 
         public void SetMoveVector(Vector2 newMoveVector)
@@ -148,7 +159,7 @@ namespace HorseGame
                     break;
                 case MoveType.Pulled:
                     {
-                        
+
                     }
                     break;
             }
@@ -211,5 +222,24 @@ namespace HorseGame
             return m_Rigidbody2D.position;
         }
 
+        public void TryCatch(/*int i = 0*/)
+        {
+            m_Animator.SetBool(m_HashCatchingPara, true);
+            m_Animator.SetBool(m_HashCatchedPara, true);
+            //if (state == 0)
+            //{
+            //    m_Animator.SetBool(m_HashCatchingPara, true);
+            //    m_Animator.SetBool(m_HashCatchedPara, true);
+            //    return true;
+            //}
+            //else
+            //    return false;
+        }
+
+        public void TryStruggle()
+        {
+            m_Animator.SetBool(m_HashCatchedPara, false);
+            m_Animator.SetBool(m_HashCatchingPara, false);
+        }
     }
 }
