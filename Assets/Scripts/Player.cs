@@ -37,6 +37,7 @@ public class Player : MonoBehaviour
     private float cdRope = 1f;
     
     protected Animator m_Animator;
+    protected PlayerAudio m_PlayerAudio;
     protected readonly int m_HashSpeedXPara = Animator.StringToHash("Speed_X");
     protected readonly int m_HashSpeedYPara = Animator.StringToHash("Speed_Y");
     protected readonly int m_HashDirectionPara = Animator.StringToHash("Direction");
@@ -58,6 +59,8 @@ public class Player : MonoBehaviour
         aimer = AimerObj.GetComponent<Aimer>();
         rb = GetComponent<Rigidbody2D>();
         m_CharacterController2D = GetComponent<CharacterController2D>();
+        m_Animator = GetComponent<Animator>();
+        m_PlayerAudio = GetComponent<PlayerAudio>();
     }
 
     // Update is called once per frame

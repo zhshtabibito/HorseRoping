@@ -31,7 +31,7 @@ public class PlayerAudio : MonoBehaviour
     {
         if (!audioSource.isPlaying)
         {
-            audioSource.PlayOneShot(Dize);
+            audioSource.PlayOneShot(Dizz);
         }
     }
 }
