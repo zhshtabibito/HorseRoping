@@ -223,8 +223,9 @@ namespace HorseGame
             return m_Rigidbody2D.position;
         }
 
-        public void TryCatch(/*int i = 0*/)
+        public void TryCatch(int id = 0)
         {
+            state = id;
             m_Animator.SetBool(m_HashCatchingPara, true);
             m_Animator.SetBool(m_HashCatchedPara, true);
             m_HorseAutio.PlayCatching();
@@ -240,6 +241,7 @@ namespace HorseGame
 
         public void TryStruggle()
         {
+            state = 0;
             m_Animator.SetBool(m_HashCatchedPara, false);
             m_Animator.SetBool(m_HashCatchingPara, false);
             m_HorseAutio.PlayRelease();
