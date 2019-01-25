@@ -181,7 +181,7 @@ SpriteRenderer:
   m_Size: {x: 1.28, y: 1.28}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &40855974
@@ -213,7 +213,6 @@ MonoBehaviour:
   id: 2
   score: 0
   state: 0
-  spd0: 5
   lenRope: 5
   AimerObj: {fileID: 505326604}
 --- !u!60 &40855976
@@ -367,7 +366,6 @@ MonoBehaviour:
   id: 1
   score: 0
   state: 0
-  spd0: 5
   lenRope: 5
   AimerObj: {fileID: 518128718}
 --- !u!212 &76861371
@@ -415,7 +413,7 @@ SpriteRenderer:
   m_Size: {x: 1.28, y: 1.28}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &76861372
