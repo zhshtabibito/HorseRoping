@@ -15,8 +15,8 @@ public class Player : MonoBehaviour
     public int score = 0;
     public int state = 0;
 
-    private float spd0 = 3;
     private float spd;
+    private float spd0 = 3;
     public float lenRope;
 
     private Rigidbody2D rb;
@@ -52,6 +52,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        lenRope = 1.8f;
         spd = spd0;
         aimer = AimerObj.GetComponent<Aimer>();
         rb = GetComponent<Rigidbody2D>();

@@ -10,8 +10,8 @@ public class Aimer : MonoBehaviour
     public GameObject arrowR;
 
     public float R;
-    private readonly float Rmin = 1;
-    private readonly float Rmax = 3;
+    private readonly float Rmin = 0.3f;
+    private readonly float Rmax = 1.1f;
     private readonly float spd = 5;
     private readonly float step = 0.8f;
 
