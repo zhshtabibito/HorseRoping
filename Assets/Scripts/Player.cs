@@ -223,7 +223,7 @@ public class Player : MonoBehaviour
         aimer.HideAimer();
         // play anime
         m_PlayerAudio.PlayThrow();
-        Rope_circle.GetComponent<Rope>().Throw(aimer.CalDelay(), World.horse.transform.position - transform.position);
+        Rope_circle.GetComponent<Rope>().Throw(aimer.CalDelay(), aimer.transform.position - transform.position);
         yield return new WaitForSeconds(aimer.CalDelay());
 
         Player enemy = World.players[2 - id];
@@ -235,6 +235,7 @@ public class Player : MonoBehaviour
             enemy.BeDizzy();
             enemy.m_Animator.SetBool(m_HashDizzyPara, true);
             enemy.m_PlayerAudio.PlayDize();
+            GetComponentInChildren<Rope>().BreakLine();
             enemy.GetComponentInChildren<Rope>().BreakLine();
             World.horse.state = 0;
             World.HandleHorseState();
@@ -266,6 +267,7 @@ public class Player : MonoBehaviour
         {
             Debug.Log("Nothing roped!");
             state = FREE;
+            GetComponentInChildren<Rope>().BreakLine();
             StartCoroutine("RopeCD");
         }
         

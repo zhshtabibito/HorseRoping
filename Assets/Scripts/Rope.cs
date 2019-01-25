@@ -24,12 +24,12 @@ public class Rope : MonoBehaviour
         {
             transform.position = transform.position + vec * Time.deltaTime / time;
             line.GetComponent<LineRenderer>().SetPosition(0, GetComponentInParent<Player>().transform.position);
-            line.GetComponent<LineRenderer>().SetPosition(0, transform.position);
+            line.GetComponent<LineRenderer>().SetPosition(1, transform.position);
         }
         else if(GetComponentInParent<Player>().state == Player.ROPING)
         {
             line.GetComponent<LineRenderer>().SetPosition(0, GetComponentInParent<Player>().transform.position);
-            line.GetComponent<LineRenderer>().SetPosition(0, World.horse.transform.position);
+            line.GetComponent<LineRenderer>().SetPosition(1, World.horse.transform.position);
         }
     }
 
@@ -40,7 +40,7 @@ public class Rope : MonoBehaviour
         transform.position = GetComponentInParent<Player>().transform.position;
         line.GetComponent<LineRenderer>().enabled = true;
         line.GetComponent<LineRenderer>().SetPosition(0, transform.position);
-        line.GetComponent<LineRenderer>().SetPosition(0, transform.position);
+        line.GetComponent<LineRenderer>().SetPosition(1, transform.position);
         StartCoroutine("TimingAndThrow");
     }
 
