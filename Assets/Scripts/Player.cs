@@ -51,13 +51,12 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        m_Animator.SetFloat(m_HashDirectionPara, 1);
-
         spd = spd0;
         aimer = AimerObj.GetComponent<Aimer>();
         rb = GetComponent<Rigidbody2D>();
         m_CharacterController2D = GetComponent<CharacterController2D>();
         m_Animator = GetComponent<Animator>();
+        m_Animator.SetFloat(m_HashDirectionPara, 1);
         m_PlayerAudio = GetComponent<PlayerAudio>();
     }
 
