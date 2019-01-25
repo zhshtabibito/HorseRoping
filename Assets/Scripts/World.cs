@@ -79,6 +79,7 @@ public class World : MonoBehaviour
     {
         yield return new WaitForSeconds(0.4f);
         players[horse.state - 1].score += 1;
+        Debug.Log(players[0].score.ToString() + " vs " + players[1].score.ToString());
         scoring = false;
     }
 
