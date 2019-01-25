@@ -105,7 +105,7 @@ namespace HorseGame
                 m_MoveVector = m_MoveDiretion[previousDirc] * moveSpeed;
                 isBorderNavigation = true;
             }
-            else if (!BorderCheck() && isBorderNavigation)
+            else if (isBorderNavigation)
             {
                 if (navTime - navTimeLast < 0)
                 {
