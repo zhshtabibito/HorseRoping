@@ -122,7 +122,7 @@ MonoBehaviour:
   enumMoveType: 0
   attenuation: 0
   raycastDistance: 0.1
-  pulledSpeed: 3
+  pulledSpeed: 2
   borderLayerMask:
     serializedVersion: 2
     m_Bits: 768
@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Catching: {fileID: 8300000, guid: 8708e3311f6845142b5ed9caa3bff2f0, type: 3}
-  Release: {fileID: 8300000, guid: cd1e936a36c0fa44b85597ddb7561a44, type: 3}
+  Release: {fileID: 8300000, guid: 4c9515107d32db749a4255b0c5fe4c3b, type: 3}
   audioSource: {fileID: 0}
 --- !u!50 &7686568104901086113
 Rigidbody2D:
