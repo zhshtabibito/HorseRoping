@@ -51,6 +51,8 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        m_Animator.SetFloat(m_HashDirectionPara, 1);
+
         spd = spd0;
         aimer = AimerObj.GetComponent<Aimer>();
         rb = GetComponent<Rigidbody2D>();
@@ -62,20 +64,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (id == 1 && Input.GetKeyDown(KeyCode.P))
-        {
-            
-        }
-        if (id == 1 && Input.GetKeyDown(KeyCode.L))
-        {
-            
-        }
-
-
-
-
-
-
         if (spd > spd0)
             spd -= spd0 * (rateDash - 1) * Time.deltaTime / timeDash;
         if (spd < spd0)
