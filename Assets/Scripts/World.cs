@@ -49,6 +49,7 @@ public class World : MonoBehaviour
         }
         else if(horse.state == 0)
         {
+            scoring = false;
             StopCoroutine("AddScore");
         }    
     }
