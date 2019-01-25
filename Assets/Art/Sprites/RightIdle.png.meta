@@ -1,7 +1,11 @@
 fileFormatVersion: 2
-guid: 05f0485f7eafb5849af85b66d06982e6
+guid: fc5589c611bbb324697a967e9a107f55
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: RightIdle_0
+    21300002: RightIdle_1
+    21300004: RightIdle_2
+    21300006: RightIdle_3
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -40,7 +44,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -82,11 +86,91 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: RightIdle_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 111
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e2a43dccf2e4a542bd87e1ccb1aa4c8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RightIdle_1
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 0
+        width: 111
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 297a9e679804c5440913f5bd56bffeba
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RightIdle_2
+      rect:
+        serializedVersion: 2
+        x: 222
+        y: 0
+        width: 111
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 700e9800e1a94a04590c8337bc1a7156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RightIdle_3
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 0
+        width: 111
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c0926be3752f374895f08d980814492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: d1e9781cffe6ec844abb09835b11b74d
+    spriteID: dd194870973773249b40f2a60af31650
     vertices: []
     indices: 
     edges: []
