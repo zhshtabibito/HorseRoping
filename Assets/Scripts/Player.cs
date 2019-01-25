@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
 {
     private static int FREE = 0;
     private static int CHARGING = 1;
-    private static int ROPING = 2;
+    public static int ROPING = 2;
     private static int DIZZY = 3;
     private static int THROWING = 4;
 
@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
 
     public GameObject AimerObj;
     public GameObject Rope;
+    public GameObject Rope_circle;
     private Aimer aimer;
 
     private bool canDash = true;
@@ -121,8 +122,8 @@ public class Player : MonoBehaviour
 
             // skill dash n pull
             if (((id==1)? // X dash
-                Input.GetKey(KeyCode.Joystick2Button1) :
-                Input.GetKey(KeyCode.Joystick4Button1)) &&
+                Input.GetKeyDown(KeyCode.Joystick2Button1) :
+                Input.GetKeyDown(KeyCode.Joystick4Button1)) &&
                 canDash && state==ROPING)
             {
                 DashCD();
@@ -130,8 +131,8 @@ public class Player : MonoBehaviour
                 spd *= rateDash;
             }
             else if (((id == 1) ? // Y pull
-                Input.GetKey(KeyCode.Joystick2Button3) :
-                Input.GetKey(KeyCode.Joystick4Button3)) &&
+                Input.GetKeyDown(KeyCode.Joystick2Button3) :
+                Input.GetKeyDown(KeyCode.Joystick4Button3)) &&
                 canPull && state == ROPING)
             {
                 World.horse.SetPulled(rb.position - World.horse.GetPosition(), spd * rateDash * 2);
@@ -150,6 +151,7 @@ public class Player : MonoBehaviour
             {
                 state = FREE;
                 Debug.Log("Rope broken");
+                GetComponentInChildren<Rope>().BreakLine();
                 World.horse.TryStruggle();
                 World.HandleHorseState();
                 StartCoroutine("RopeCD");
@@ -158,7 +160,7 @@ public class Player : MonoBehaviour
             else if((World.horse.transform.position - transform.position).magnitude > 0.8f*(aimer.R + lenRope))
             {
                 // warning
-
+                Debug.Log("Warning!");
             }
 
         }
@@ -221,8 +223,9 @@ public class Player : MonoBehaviour
         aimer.HideAimer();
         // play anime
         m_PlayerAudio.PlayThrow();
- 
+        Rope_circle.GetComponent<Rope>().Throw(aimer.CalDelay(), aimer.transform.position - transform.position);
         yield return new WaitForSeconds(aimer.CalDelay());
+
         Player enemy = World.players[2 - id];
         if ((enemy.transform.position - aimer.transform.position).magnitude <= aimer.R)
         {
@@ -232,6 +235,8 @@ public class Player : MonoBehaviour
             enemy.BeDizzy();
             enemy.m_Animator.SetBool(m_HashDizzyPara, true);
             enemy.m_PlayerAudio.PlayDize();
+            GetComponentInChildren<Rope>().BreakLine();
+            enemy.GetComponentInChildren<Rope>().BreakLine();
             World.horse.state = 0;
             World.HandleHorseState();
             StartCoroutine("RopeCD");
@@ -252,6 +257,7 @@ public class Player : MonoBehaviour
                 Debug.Log("Roped Horse roped!");
                 enemy.state = 0;
                 enemy.aimer.ResetAimer();
+                enemy.GetComponentInChildren<Rope>().BreakLine();
                 World.horse.TryStruggle();
                 World.HandleHorseState();
                 StartCoroutine("RopeCD");
@@ -261,6 +267,7 @@ public class Player : MonoBehaviour
         {
             Debug.Log("Nothing roped!");
             state = FREE;
+            GetComponentInChildren<Rope>().BreakLine();
             StartCoroutine("RopeCD");
         }
         
