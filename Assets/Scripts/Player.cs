@@ -23,7 +23,6 @@ public class Player : MonoBehaviour
 
     public GameObject AimerObj;
     public GameObject Rope;
-    public GameObject Rope_circle;
     private Aimer aimer;
 
     private bool canDash = true;
@@ -120,7 +119,7 @@ public class Player : MonoBehaviour
                 StartCoroutine("RopeHorse");
             }
 
-            // skill dash n pull
+            // skill dash and pull
             if (((id==1)? // X dash
                 Input.GetKeyDown(KeyCode.Joystick2Button1) :
                 Input.GetKeyDown(KeyCode.Joystick4Button1)) &&
@@ -135,7 +134,7 @@ public class Player : MonoBehaviour
                 Input.GetKeyDown(KeyCode.Joystick4Button3)) &&
                 canPull && state == ROPING)
             {
-                World.horse.SetPulled(rb.position - World.horse.GetPosition(), spd * rateDash * 2);
+                World.horse.SetPulled(rb.position - World.horse.GetPosition(), spd * rateDash);
                 PullCD();
                 m_Animator.SetBool(m_HashPullPara, true);
                 // Vector3 rope = World.horse.transform.position - transform.position;
@@ -152,6 +151,7 @@ public class Player : MonoBehaviour
                 state = FREE;
                 Debug.Log("Rope broken");
                 GetComponentInChildren<Rope>().BreakLine();
+                GetComponentInChildren<LineRenderer>().GetComponent<Animator>().enabled = false;
                 World.horse.TryStruggle();
                 World.HandleHorseState();
                 StartCoroutine("RopeCD");
@@ -161,6 +161,11 @@ public class Player : MonoBehaviour
             {
                 // warning
                 Debug.Log("Warning!");
+                GetComponentInChildren<LineRenderer>().GetComponent<Animator>().enabled = true;
+            }
+            else
+            {
+                GetComponentInChildren<LineRenderer>().GetComponent<Animator>().enabled = false;
             }
 
         }
@@ -223,7 +228,7 @@ public class Player : MonoBehaviour
         aimer.HideAimer();
         // play anime
         m_PlayerAudio.PlayThrow();
-        Rope_circle.GetComponent<Rope>().Throw(aimer.CalDelay(), aimer.transform.position - transform.position);
+        GetComponentInChildren<Rope>().Throw(aimer.CalDelay(), aimer.transform.position - transform.position);
         yield return new WaitForSeconds(aimer.CalDelay());
 
         Player enemy = World.players[2 - id];

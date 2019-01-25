@@ -219,8 +219,7 @@ MonoBehaviour:
   state: 0
   lenRope: 5
   AimerObj: {fileID: 505326604}
-  Rope: {fileID: 0}
-  Rope_circle: {fileID: 0}
+  Rope: {fileID: 1366338683}
   m_MoveVector: {x: 0, y: 0}
 --- !u!60 &40855976
 PolygonCollider2D:
@@ -376,7 +375,6 @@ MonoBehaviour:
   lenRope: 5
   AimerObj: {fileID: 518128718}
   Rope: {fileID: 1032772731}
-  Rope_circle: {fileID: 0}
   m_MoveVector: {x: 0, y: 0}
 --- !u!212 &76861371
 SpriteRenderer:
@@ -2065,6 +2063,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1027011228}
   - component: {fileID: 1027011229}
+  - component: {fileID: 1027011230}
   m_Layer: 0
   m_Name: Line
   m_TagString: Untagged
@@ -2080,7 +2079,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1027011227}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5, y: 3, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 40855974}
@@ -2093,7 +2092,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1027011227}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2181,6 +2180,25 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!95 &1027011230
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1027011227}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 26d3e08e5e9b25949afd1bd2dfd5172f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1032772731
 GameObject:
   m_ObjectHideFlags: 0
@@ -3157,6 +3175,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1888818052}
   - component: {fileID: 1888818053}
+  - component: {fileID: 1888818054}
   m_Layer: 0
   m_Name: Line
   m_TagString: Untagged
@@ -3172,7 +3191,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1888818051}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5, y: 3, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 76861372}
@@ -3185,7 +3204,7 @@ LineRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1888818051}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3273,6 +3292,25 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!95 &1888818054
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1888818051}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 26d3e08e5e9b25949afd1bd2dfd5172f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1978211093
 GameObject:
   m_ObjectHideFlags: 0
