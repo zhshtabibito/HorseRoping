@@ -222,7 +222,7 @@ public class Player : MonoBehaviour
             {
                 state = ROPING;
                 Debug.Log("Free Horse roped!");
-                World.horse.state = id;
+                World.horse.TryCatch(id);
             }
             else // horse roped
             {
@@ -231,7 +231,7 @@ public class Player : MonoBehaviour
                 Debug.Log("Roped Horse roped!");
                 enemy.state = 0;
                 enemy.aimer.ResetAimer();
-                World.horse.state = 0;
+                World.horse.TryStruggle();
                 World.HandleHorseState();
                 StartCoroutine("RopeCD");
             }
