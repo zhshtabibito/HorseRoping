@@ -225,6 +225,8 @@ namespace HorseGame
 
         public void TryCatch(int id = 0)
         {
+            if (id == state)
+                return;
             state = id;
             m_Animator.SetBool(m_HashCatchingPara, true);
             m_Animator.SetBool(m_HashCatchedPara, true);
