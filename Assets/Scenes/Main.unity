@@ -135,7 +135,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &40855973
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -729,7 +729,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &505326605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2667,6 +2667,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_UpdateMode
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686568104901086122, guid: f9bcdd58a7a65b445b16b9d7cf0b319c,
+        type: 3}
+      propertyPath: borderLayerMask.m_Bits
+      value: 512
       objectReference: {fileID: 0}
     - target: {fileID: 6115233458808279470, guid: f9bcdd58a7a65b445b16b9d7cf0b319c,
         type: 3}
