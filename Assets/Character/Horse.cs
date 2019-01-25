@@ -67,7 +67,7 @@ namespace HorseGame
         /// <summary>
         /// 强制导航已持续时间
         /// </summary>
-        protected float navTimeLast = 0f;
+        [SerializeField] protected float navTimeLast = 0f;
 
         protected readonly int m_HashSpeedPara = Animator.StringToHash("Speed");
         protected readonly int m_HashCatchingPara = Animator.StringToHash("Catching");
@@ -98,13 +98,14 @@ namespace HorseGame
         private void Update()
         {
             UpdateFace();
+            m_Animator.SetFloat(m_HashSpeedPara, m_MoveVector.magnitude);
             if (BorderCheck() && isBorderNavigation == false)
             {
                 previousDirc = (previousDirc + 4) % 8;
                 m_MoveVector = m_MoveDiretion[previousDirc] * moveSpeed;
                 isBorderNavigation = true;
             }
-            else
+            else if (isBorderNavigation)
             {
                 if (navTime - navTimeLast < 0)
                 {
@@ -115,6 +116,10 @@ namespace HorseGame
                 {
                     navTimeLast += Time.deltaTime;
                 }
+            }
+            else
+            {
+                navTimeLast = 0;
             }
             if (enumMoveType == MoveType.Pulled)
             {
@@ -156,6 +161,7 @@ namespace HorseGame
                         {
                             previousDirc = Random.Range(0, m_MoveDiretion.Length);
                             m_MoveVector = m_MoveDiretion[previousDirc] * moveSpeed;
+                            Debug.Log(m_MoveDiretion[previousDirc]);
                         }
                     }
                     break;

@@ -220,6 +220,10 @@ MonoBehaviour:
   lenRope: 5
   AimerObj: {fileID: 505326604}
   Rope: {fileID: 1366338683}
+<<<<<<< HEAD
+=======
+  Rope_circle: {fileID: 1341163301}
+>>>>>>> 70984bff72b7b8fc9e06c9b0ac037195ddc4e1ff
   m_MoveVector: {x: 0, y: 0}
 --- !u!60 &40855976
 PolygonCollider2D:
@@ -375,6 +379,10 @@ MonoBehaviour:
   lenRope: 5
   AimerObj: {fileID: 518128718}
   Rope: {fileID: 1032772731}
+<<<<<<< HEAD
+=======
+  Rope_circle: {fileID: 1978211093}
+>>>>>>> 70984bff72b7b8fc9e06c9b0ac037195ddc4e1ff
   m_MoveVector: {x: 0, y: 0}
 --- !u!212 &76861371
 SpriteRenderer:
@@ -3153,16 +3161,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6115233458808279470, guid: f9bcdd58a7a65b445b16b9d7cf0b319c,
-        type: 3}
-      propertyPath: audioSource
-      value: 
-      objectReference: {fileID: 1225044532}
     - target: {fileID: 7686568104901086114, guid: f9bcdd58a7a65b445b16b9d7cf0b319c,
         type: 3}
       propertyPath: m_UpdateMode
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7686568104901086114, guid: f9bcdd58a7a65b445b16b9d7cf0b319c,
+        type: 3}
+      propertyPath: m_UpdateMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686568104901086122, guid: f9bcdd58a7a65b445b16b9d7cf0b319c,
+        type: 3}
+      propertyPath: borderLayerMask.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 6115233458808279470, guid: f9bcdd58a7a65b445b16b9d7cf0b319c,
+        type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 1225044532}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9bcdd58a7a65b445b16b9d7cf0b319c, type: 3}
 --- !u!1 &1888818051
