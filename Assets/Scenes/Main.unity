@@ -135,7 +135,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &40855973
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -217,6 +217,7 @@ MonoBehaviour:
   lenRope: 5
   AimerObj: {fileID: 505326604}
   Rope: {fileID: 0}
+  m_MoveVector: {x: 0, y: 0}
 --- !u!60 &40855976
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -371,6 +372,7 @@ MonoBehaviour:
   lenRope: 5
   AimerObj: {fileID: 518128718}
   Rope: {fileID: 1032772731}
+  m_MoveVector: {x: 0, y: 0}
 --- !u!212 &76861371
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -496,7 +498,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 9ea9beda266d03f44a6dc7d5fdc13b26, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 1
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
@@ -642,7 +644,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &505326605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2143,6 +2145,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7686568104901086114, guid: f9bcdd58a7a65b445b16b9d7cf0b319c,
+        type: 3}
+      propertyPath: m_UpdateMode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6115233458808279470, guid: f9bcdd58a7a65b445b16b9d7cf0b319c,
         type: 3}

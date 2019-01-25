@@ -45,7 +45,7 @@ public class Player : MonoBehaviour
     protected readonly int m_HashDashPara = Animator.StringToHash("Dash");
     protected readonly int m_HashPullPara = Animator.StringToHash("Pull");
     protected readonly int m_HashDizzyPara = Animator.StringToHash("Dizzy");
-    protected Vector2 m_MoveVector;
+    [SerializeField] protected Vector2 m_MoveVector;
     protected CharacterController2D m_CharacterController2D;
 
     // Start is called before the first frame update
@@ -161,17 +161,22 @@ public class Player : MonoBehaviour
             }
 
         }
-
-        m_CharacterController2D.Move(m_MoveVector * Time.deltaTime);
+        
         m_Animator.SetFloat(m_HashSpeedXPara, m_MoveVector.x);
         m_Animator.SetFloat(m_HashSpeedYPara, m_MoveVector.y);
-        if(m_MoveVector.x != 0 && m_MoveVector.y != 0)
-            m_Animator.SetFloat(m_HashDirectionPara,
-                (m_MoveVector.y > 0 && m_MoveVector.y >= m_MoveVector.x && m_MoveVector.y >= -m_MoveVector.x) ? 0 :
-                (m_MoveVector.y < 0 && -m_MoveVector.y >= m_MoveVector.x && -m_MoveVector.y >= -m_MoveVector.x) ? (1 / 3) :
-                (m_MoveVector.x < 0 && -m_MoveVector.x >= m_MoveVector.y && -m_MoveVector.x >= -m_MoveVector.y) ? (2 / 3) : 1);
 
     }
+    private void FixedUpdate()
+    {
+        float dir = (m_MoveVector.x < 0) ? (2f / 3f) :
+                (m_MoveVector.x > 0) ? 1 :
+                (m_MoveVector.y > 0) ? 0 :
+                (m_MoveVector.y < 0) ? (1f / 3f) : -1;
+        if(dir >= 0)
+            m_Animator.SetFloat(m_HashDirectionPara,dir);
+        m_CharacterController2D.Move(m_MoveVector * Time.deltaTime);
+    }
+
 
     public void BeDizzy()
     {
