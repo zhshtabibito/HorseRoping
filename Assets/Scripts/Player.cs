@@ -152,6 +152,7 @@ public class Player : MonoBehaviour
                 Debug.Log("Rope broken");
                 GetComponentInChildren<Rope>().BreakLine();
                 GetComponentInChildren<LineRenderer>().GetComponent<Animator>().enabled = false;
+                GetComponentInChildren<LineRenderer>().GetComponent<SpriteRenderer>().enabled = false;
                 World.horse.TryStruggle();
                 World.HandleHorseState();
                 StartCoroutine("RopeCD");
@@ -162,10 +163,12 @@ public class Player : MonoBehaviour
                 // warning
                 Debug.Log("Warning!");
                 GetComponentInChildren<LineRenderer>().GetComponent<Animator>().enabled = true;
+                GetComponentInChildren<LineRenderer>().GetComponent<SpriteRenderer>().enabled = true;
             }
             else
             {
                 GetComponentInChildren<LineRenderer>().GetComponent<Animator>().enabled = false;
+                GetComponentInChildren<LineRenderer>().GetComponent<SpriteRenderer>().enabled = false;
             }
 
         }
@@ -198,6 +201,7 @@ public class Player : MonoBehaviour
         // anime
         yield return new WaitForSeconds(2);
         aimer.ResetAimer();
+        state = FREE;
     }
 
     IEnumerator DashCD()
