@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
 
     public GameObject AimerObj;
+    public GameObject Rope;
     private Aimer aimer;
 
     private bool canDash = true;
@@ -61,6 +62,20 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (id == 1 && Input.GetKeyDown(KeyCode.P))
+        {
+            
+        }
+        if (id == 1 && Input.GetKeyDown(KeyCode.L))
+        {
+            
+        }
+
+
+
+
+
+
         if (spd > spd0)
             spd -= spd0 * (rateDash - 1) * Time.deltaTime / timeDash;
         if (spd < spd0)
@@ -93,7 +108,14 @@ public class Player : MonoBehaviour
                 Input.GetKey(KeyCode.Joystick4Button15)) &&
                 (state == FREE || state == CHARGING))
             {
-                state = CHARGING;
+                // rope charge anime
+                if(state == FREE)
+                {
+                    Rope.GetComponent<Animator>().enabled = true;
+                    Rope.GetComponent<Animator>().SetBool(Animator.StringToHash("throw"), false);
+                    Rope.GetComponent<Animator>().SetBool(Animator.StringToHash("rerope"), true);
+                    state = CHARGING;
+                }
                 spd = spd0 * 0.5f; // slow down while charging
                 aimer.AddR();
             }
@@ -103,6 +125,9 @@ public class Player : MonoBehaviour
                 state == CHARGING && canRope)
             {
                 spd = spd0; // speed normal after charging
+                // rope anime
+                Rope.GetComponent<Animator>().SetBool(Animator.StringToHash("rerope"), false);
+                Rope.GetComponent<Animator>().SetBool(Animator.StringToHash("throw"), true);
                 StartCoroutine("RopeHorse");
             }
 
@@ -153,10 +178,11 @@ public class Player : MonoBehaviour
         m_CharacterController2D.Move(m_MoveVector * Time.deltaTime);
         m_Animator.SetFloat(m_HashSpeedXPara, m_MoveVector.x);
         m_Animator.SetFloat(m_HashSpeedYPara, m_MoveVector.y);
-        m_Animator.SetFloat(m_HashDirectionPara,
-            (m_MoveVector.y > 0 && m_MoveVector.y >= m_MoveVector.x && m_MoveVector.y >= -m_MoveVector.x) ? 0 :
-            (m_MoveVector.y < 0 && -m_MoveVector.y >= m_MoveVector.x && -m_MoveVector.y >= -m_MoveVector.x) ? (1 / 3) :
-            (m_MoveVector.x < 0 && -m_MoveVector.x >= m_MoveVector.y && -m_MoveVector.x >= -m_MoveVector.y) ? (2 / 3) : 1);
+        if(m_MoveVector.x != 0 && m_MoveVector.y != 0)
+            m_Animator.SetFloat(m_HashDirectionPara,
+                (m_MoveVector.y > 0 && m_MoveVector.y >= m_MoveVector.x && m_MoveVector.y >= -m_MoveVector.x) ? 0 :
+                (m_MoveVector.y < 0 && -m_MoveVector.y >= m_MoveVector.x && -m_MoveVector.y >= -m_MoveVector.x) ? (1 / 3) :
+                (m_MoveVector.x < 0 && -m_MoveVector.x >= m_MoveVector.y && -m_MoveVector.x >= -m_MoveVector.y) ? (2 / 3) : 1);
 
     }
 
