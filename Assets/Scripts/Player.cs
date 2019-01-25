@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     public int score = 0;
     public int state = 0;
 
-    public float spd0;
+    private float spd0 = 3;
     private float spd;
     public float lenRope;
 
@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
 
     private bool canDash = true;
     private float cdDash = 8f;
-    private float rateDash = 3f;
+    private float rateDash = 2f;
     private float timeDash = 1f;
 
     private bool canPull = true;
@@ -94,6 +94,7 @@ public class Player : MonoBehaviour
                 (state == FREE || state == CHARGING))
             {
                 state = CHARGING;
+                spd = spd0 * 0.5f; // slow down while charging
                 aimer.AddR();
             }
             else if (((id==1) ? // ZR release rope
@@ -101,6 +102,7 @@ public class Player : MonoBehaviour
                 Input.GetKeyUp(KeyCode.Joystick4Button15)) &&
                 state == CHARGING && canRope)
             {
+                spd = spd0; // speed normal after charging
                 StartCoroutine("RopeHorse");
             }
 
@@ -135,7 +137,7 @@ public class Player : MonoBehaviour
             {
                 state = FREE;
                 Debug.Log("Rope broken");
-                World.horse.state = 0;
+                World.horse.TryStruggle();
                 World.HandleHorseState();
                 StartCoroutine("RopeCD");
 
