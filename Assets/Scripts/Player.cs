@@ -64,6 +64,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // speed down after dash
         if (spd > spd0)
             spd -= spd0 * (rateDash - 1) * Time.deltaTime / timeDash;
         if (spd < spd0)
@@ -78,6 +79,8 @@ public class Player : MonoBehaviour
             float LR = Input.GetKey(KeyCode.D) ? 1 : Input.GetKey(KeyCode.A) ? -1 : 0;
             float UD = Input.GetKey(KeyCode.W) ? 1 : Input.GetKey(KeyCode.S) ? -1 : 0;
             **************************************************/
+
+            // iuput move
             if (id == 1)
             {
                 LR = Input.GetAxis("Horizontal_P1L");
@@ -96,15 +99,15 @@ public class Player : MonoBehaviour
                 Input.GetKey(KeyCode.Joystick4Button15)) &&
                 (state == FREE || state == CHARGING))
             {
-                // rope charge anime
+                // play rope charge anime
                 if(state == FREE)
                 {
                     Rope.GetComponent<Animator>().enabled = true;
                     Rope.GetComponent<Animator>().SetBool(Animator.StringToHash("throw"), false);
                     Rope.GetComponent<Animator>().SetBool(Animator.StringToHash("rerope"), true);
                     state = CHARGING;
+                    spd = spd0 * 0.5f; // slow down while charging
                 }
-                spd = spd0 * 0.5f; // slow down while charging
                 aimer.AddR();
             }
             else if (((id==1) ? // ZR release rope
@@ -116,6 +119,7 @@ public class Player : MonoBehaviour
                 // rope anime
                 Rope.GetComponent<Animator>().SetBool(Animator.StringToHash("rerope"), false);
                 Rope.GetComponent<Animator>().SetBool(Animator.StringToHash("throw"), true);
+                // process the result of roping
                 StartCoroutine("RopeHorse");
             }
 
@@ -158,7 +162,7 @@ public class Player : MonoBehaviour
                 StartCoroutine("RopeCD");
 
             }
-            else if((World.horse.transform.position - transform.position).magnitude > 0.8f*(aimer.R + lenRope))
+            else if((World.horse.transform.position - transform.position).magnitude > 0.6f*(aimer.R + lenRope))
             {
                 // warning
                 Debug.Log("Warning!");
@@ -177,6 +181,7 @@ public class Player : MonoBehaviour
         m_Animator.SetFloat(m_HashSpeedYPara, m_MoveVector.y);
 
     }
+
     private void FixedUpdate()
     {
         float dir = (m_MoveVector.x < 0) ? (2f / 3f) :
@@ -226,6 +231,7 @@ public class Player : MonoBehaviour
         canRope = true;
     }
 
+    // process result of roping
     IEnumerator RopeHorse()
     {
         state = THROWING;

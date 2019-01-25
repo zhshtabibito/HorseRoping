@@ -13,7 +13,7 @@ public class Aimer : MonoBehaviour
     private readonly float Rmin = 0.3f;
     private readonly float Rmax = 1.1f;
     private readonly float spd = 5;
-    private readonly float step = 0.8f;
+    private readonly float step = 0.8f; // spd of charging
 
 
     // Start is called before the first frame update
@@ -35,7 +35,8 @@ public class Aimer : MonoBehaviour
             float LR = Input.GetKey(KeyCode.RightArrow) ? 1 : Input.GetKey(KeyCode.LeftArrow) ? -1 : 0;
             float UD = Input.GetKey(KeyCode.UpArrow) ? 1 : Input.GetKey(KeyCode.DownArrow) ? -1 : 0;
             ***********************************************/
-            if(player.id == 1)
+            // move aimer
+            if (player.id == 1)
             {
                 LR = -Input.GetAxis("Horizontal_P1R");
                 UD = Input.GetAxis("Vertical_P1R");
@@ -46,6 +47,8 @@ public class Aimer : MonoBehaviour
                 UD = Input.GetAxis("Vertical_P2R");
             }
             transform.position += new Vector3(LR * spd * Time.deltaTime, UD * spd * Time.deltaTime, 0);
+            
+            // limit aimer distance
             Vector3 rope = transform.position - player.transform.position;
             float mag = rope.magnitude;
             if(mag > player.lenRope)
@@ -86,6 +89,7 @@ public class Aimer : MonoBehaviour
 
     public float CalDelay()
     {
+        // cal rope flying time by R
         return 0.8f-0.2f*(R-Rmin)/step;
     }
 }

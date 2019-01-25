@@ -27,6 +27,7 @@ public class World : MonoBehaviour
 
     IEnumerator TimingEnd()
     {
+        // timing to game over
         yield return new WaitForSeconds(timeMain);
         Player winner = players[0];
         foreach (Player player in players)
