@@ -13,7 +13,7 @@ public class Aimer : MonoBehaviour
     private readonly float Rmin = 0.3f;
     private readonly float Rmax = 1.1f;
     private readonly float spd = 5;
-    private readonly float step = 0.8f; // spd of charging
+    private readonly float step = 0.8f; // curSpeed of charging
 
 
     // Start is called before the first frame update
@@ -28,7 +28,7 @@ public class Aimer : MonoBehaviour
     void Update()
     {
         float LR, UD;
-        if(player.state <=1) // not roping
+        if((int)player.playerStatus <= 1) // not roping
         {
             // PC test
             /***********************************************
@@ -36,12 +36,12 @@ public class Aimer : MonoBehaviour
             float UD = Input.GetKey(KeyCode.UpArrow) ? 1 : Input.GetKey(KeyCode.DownArrow) ? -1 : 0;
             ***********************************************/
             // move aimer
-            if (player.id == 1)
+            if (player.playerID == 1)
             {
                 LR = -Input.GetAxis("Horizontal_P1R");
                 UD = Input.GetAxis("Vertical_P1R");
             }
-            else // player.id == 2
+            else // player.playerID == 2
             {
                 LR = -Input.GetAxis("Horizontal_P2R");
                 UD = Input.GetAxis("Vertical_P2R");
@@ -90,6 +90,6 @@ public class Aimer : MonoBehaviour
     public float CalDelay()
     {
         // cal rope flying time by R
-        return 0.8f-0.2f*(R-Rmin)/step;
+        return 0.8f - 0.2f * (R - Rmin) / step;
     }
 }

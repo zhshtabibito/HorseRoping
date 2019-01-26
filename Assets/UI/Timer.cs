@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 public class Timer : MonoBehaviour {
-    public int TotalTime=(int)World.timeMain;//总时间
+    public int TotalTime=(int)World.WorldInstance.timeMain;//总时间
     public Text TimeText;//在UI里显示时间
     public string LoadsceneName;
     private int mumite;//分

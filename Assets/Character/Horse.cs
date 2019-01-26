@@ -161,7 +161,7 @@ namespace HorseGame
                         {
                             previousDirc = Random.Range(0, m_MoveDiretion.Length);
                             m_MoveVector = m_MoveDiretion[previousDirc] * moveSpeed;
-                            Debug.Log(m_MoveDiretion[previousDirc]);
+                            //Debug.Log(m_MoveDiretion[previousDirc]);
                         }
                     }
                     break;

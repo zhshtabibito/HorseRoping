@@ -26,10 +26,10 @@ public class Rope : MonoBehaviour
             line.GetComponent<LineRenderer>().SetPosition(0, GetComponentInParent<Player>().transform.position);
             line.GetComponent<LineRenderer>().SetPosition(1, transform.position);
         }
-        else if(GetComponentInParent<Player>().state == Player.ROPING)
+        else if(GetComponentInParent<Player>().playerStatus == Player.PlayerStatus.Roping)
         {
             line.GetComponent<LineRenderer>().SetPosition(0, GetComponentInParent<Player>().transform.position);
-            line.GetComponent<LineRenderer>().SetPosition(1, World.horse.transform.position);
+            line.GetComponent<LineRenderer>().SetPosition(1, World.WorldInstance.horse.transform.position);
         }
     }
 
