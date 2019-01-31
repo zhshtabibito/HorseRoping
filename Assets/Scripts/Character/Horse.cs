@@ -123,7 +123,7 @@ namespace HorseGame
             }
             if (enumMoveType == MoveType.Pulled)
             {
-                //float speed = Mathf.MoveTowards(m_MoveVector.magnitude, moveSpeed, attenuation * Time.deltaTime);
+                //float maxSpeed = Mathf.MoveTowards(m_MoveVector.magnitude, moveSpeed, attenuation * Time.deltaTime);
                 m_MoveVector = m_MoveVector * Mathf.Max((m_MoveVector.magnitude - attenuation) / m_MoveVector.magnitude, moveSpeed / m_MoveVector.magnitude);
             }
         }

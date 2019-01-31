@@ -20,12 +20,12 @@ public class UIController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        for (int i = 0; i < World.WorldInstance.players.Count; i++)
-        {
-            playerPanel[i].SetActive(true);
-            scoreSlider[i].value = World.WorldInstance.players[i].score / 100f;
-        }
-        //Debug.Log(World.WorldInstance.players[0].score);
+        //for (int i = 0; i < GameController.Instance.players.Count; i++)
+        //{
+        //    playerPanel[i].SetActive(true);
+        //    scoreSlider[i].value = GameController.Instance.players[i].score / 100f;
+        //}
+        //Debug.Log(GameController.Instance.players[0].score);
     }
 
     public void EndGame(Player player)

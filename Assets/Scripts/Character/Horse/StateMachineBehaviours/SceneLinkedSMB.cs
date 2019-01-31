@@ -166,7 +166,7 @@ namespace HorseGame
     }
 
     //This class repalce normal StateMachineBehaviour. It add the possibility of having direct reference to the object
-    //the state is running on, avoiding the cost of retrienving it through a GetComponent every time.
+    //the state is running on, avoiding the cost of retrienving it through a GetComponent every throwTime.
     //c.f. Documentation for more in depth explainations.
     public abstract class SealedSMB : StateMachineBehaviour
     {

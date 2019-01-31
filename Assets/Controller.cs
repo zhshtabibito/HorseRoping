@@ -13,10 +13,10 @@ public class Controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!Mathf.Approximately(Input.GetAxis("Horizontal 1"), 0f))
-            Debug.Log("Horizontal 1: " + Input.GetAxis("Horizontal 1"));
+        if (!Mathf.Approximately(Input.GetAxis("moveHorizontal 1"), 0f))
+            Debug.Log("moveHorizontal 1: " + Input.GetAxis("moveHorizontal 1"));
 
-        if (!Mathf.Approximately(Input.GetAxis("Horizontal 2"), 0f))
-            Debug.Log("Horizontal 2: " + Input.GetAxis("Horizontal 2"));
+        if (!Mathf.Approximately(Input.GetAxis("moveHorizontal 2"), 0f))
+            Debug.Log("moveHorizontal 2: " + Input.GetAxis("moveHorizontal 2"));
     }
 }

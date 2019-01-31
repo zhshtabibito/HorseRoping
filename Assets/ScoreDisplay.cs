@@ -15,7 +15,7 @@ public class ScoreDisplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        text.text = (int)(World.WorldInstance.timeMain / 60) + "     " + (int)(World.WorldInstance.timeMain % 60);
+        //text.text = (int)(GameController.Instance.timeMain / 60) + "     " + (int)(GameController.Instance.timeMain % 60);
     }
 
     public void SetTimePanel(float seconds)
