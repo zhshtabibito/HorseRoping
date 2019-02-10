@@ -25,22 +25,6 @@ public class Player : MonoBehaviour
     //public int state = 0;
     public PlayerStatus playerStatus = PlayerStatus.Normal;
 
-    #region InputSetting
-    [Header("Input Setting")]
-    public string moveHorizontal = "Horizontal_P1L";
-    public string moveVertical = "Vertical_P1L";
-    public string aimerHorzontal = "Horizontal_P1R";
-    public string aimerVertical = "Vertical_P1R";
-    //public string chargeButton = "RT_P1";
-    public KeyCode ropeButton = KeyCode.Joystick1Button5;
-    public KeyCode dashButton = KeyCode.Joystick1Button2;
-    public KeyCode pullButton = KeyCode.Joystick1Button3;
-    /// <summary>
-    /// charging and rope
-    /// </summary>
-    //public KeyCode keyRope = KeyCode.Joystick2Button15;
-    #endregion
-
     #region Timer
     public float dashCD = 1f;
     public float dashTimer = 0f;
@@ -88,6 +72,7 @@ public class Player : MonoBehaviour
 
     [SerializeField] protected Vector2 m_MoveVector;
     protected CharacterController2D m_CharacterController2D;
+    public PlayerInput playerInput;
 
     // Start is called before the first frame update
     void Awake()
@@ -97,6 +82,7 @@ public class Player : MonoBehaviour
         aimer = aimerObj.GetComponent<Aimer>();
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_CharacterController2D = GetComponent<CharacterController2D>();
+        playerInput = GetComponent<PlayerInput>();
         m_Animator = GetComponent<Animator>();
         m_Animator.SetFloat(m_HashDirectionPara, 1);
         m_PlayerAudio = GetComponent<PlayerAudio>();
@@ -112,11 +98,12 @@ public class Player : MonoBehaviour
         if (playerStatus != PlayerStatus.Dizzy)
         {
             float mHorizontal, mVertical;
-            mHorizontal = Input.GetAxis(moveHorizontal);
-            mVertical = -Input.GetAxis(moveVertical);
+            mHorizontal = playerInput.PlayerHorizontal.Value;
+            mVertical = playerInput.PlayerVertical.Value;
+            Debug.Log(playerInput.PlayerVertical.Value);
             m_MoveVector = new Vector2(mHorizontal, mVertical) * curSpeed;
 
-            if (Input.GetKey(ropeButton) &&
+            if (playerInput.ThrowRope.Held &&
                (playerStatus == PlayerStatus.Normal || playerStatus == PlayerStatus.Charging))
             {
                 if (playerStatus == PlayerStatus.Normal)
@@ -126,7 +113,7 @@ public class Player : MonoBehaviour
                     aimer.StartCharging();
                 }
             }
-            if (Input.GetKeyUp(ropeButton) && playerStatus == PlayerStatus.Charging && canRope)
+            if (playerInput.ThrowRope.Up && playerStatus == PlayerStatus.Charging && canRope)
             {
                 playerStatus = PlayerStatus.Throwing;
                 curSpeed = maxSpeed;
@@ -135,13 +122,13 @@ public class Player : MonoBehaviour
             }
 
             // skill dash and pull
-            if ((Input.GetKeyDown(dashButton) && canDash))
+            if ((playerInput.Dash.Down && canDash))
             {
                 canDash = false;
                 m_Animator.SetBool(m_HashDashPara, true);
                 curSpeed *= dashSpeed;
             }
-            if ((Input.GetKeyDown(pullButton) && canPull && playerStatus == PlayerStatus.Roping))
+            if ((playerInput.Pull.Down && canPull && playerStatus == PlayerStatus.Roping))
             {
                 canPull = false;
                 GameController.Instance.horse.SetPulled(m_Rigidbody2D.position - GameController.Instance.horse.GetPosition(), pullSpeed);
