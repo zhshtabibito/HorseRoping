@@ -22,6 +22,7 @@ public class Rope : MonoBehaviour
     protected readonly int m_HashChargePara = Animator.StringToHash("Charge");
     protected readonly int m_HashThrowPara = Animator.StringToHash("Throw");
     protected readonly int m_HashEnablePara = Animator.StringToHash("Enable");
+    protected readonly int m_HashResetPara = Animator.StringToHash("Reset");
     // Start is called before the first frame update
 
     private void Awake()
@@ -113,5 +114,18 @@ public class Rope : MonoBehaviour
         this.throwDirection = direction.normalized;
 
         isThrowing = true;
+    }
+
+    public void ResetRope()
+    {
+        isThrowing = false;
+        isCatching = false;
+        m_Animator.SetTrigger(m_HashResetPara);
+
+        ropeCircle.transform.position = player.throwPosition.position;
+        m_Animator.SetBool(m_HashEnablePara, true);
+        ropeLine.GetComponent<LineRenderer>().enabled = false;
+        ropeCircle.GetComponent<BoxCollider2D>().enabled = false;
+        ropeCircle.GetComponent<SpriteRenderer>().enabled = false;
     }
 }

@@ -72,6 +72,7 @@ namespace HorseGame
         protected readonly int m_HashSpeedPara = Animator.StringToHash("Speed");
         protected readonly int m_HashCatchingPara = Animator.StringToHash("Catching");
         protected readonly int m_HashCatchedPara = Animator.StringToHash("Catched");
+        protected readonly int m_HashRespawnPara = Animator.StringToHash("Respawn");
         public Vector2[] MoveDiretion
         {
             get { return m_MoveDiretion; }
@@ -253,6 +254,20 @@ namespace HorseGame
             m_Animator.SetBool(m_HashCatchedPara, false);
             m_Animator.SetBool(m_HashCatchingPara, false);
             m_HorseAutio.PlayRelease();
+        }
+
+        public void Respawn()
+        {
+            m_Animator.SetTrigger(m_HashRespawnPara);
+            state = 0;
+        }
+        public void Respawn(Vector2 respawnPos)
+        {
+            m_Animator.SetBool(m_HashCatchingPara, false);
+            m_Animator.SetBool(m_HashCatchedPara, false);
+            m_Animator.SetTrigger(m_HashRespawnPara);
+            transform.position = respawnPos;
+            state = 0;
         }
     }
 }

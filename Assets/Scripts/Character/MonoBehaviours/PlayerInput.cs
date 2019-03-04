@@ -15,15 +15,14 @@ namespace HorseGame
         public bool HaveControl { get { return m_HaveControl; } }
 
         public int playerNum = 1;
-        public InputButton Pause;
-        public InputButton ThrowRope;
-        public InputButton Dash;
-        public InputButton Pull;
-        //public InputButton Jump = new InputButton(KeyCode.Space, XboxControllerButtons.A);
-        public InputAxis PlayerHorizontal;
-        public InputAxis PlayerVertical;
-        public InputAxis AimerHorizontal;
-        public InputAxis AimerVertical;
+        public InputButton Pause = new InputButton(KeyCode.Escape, XboxControllerButtons.Menu, 1);
+        public InputButton ThrowRope = new InputButton(KeyCode.E, XboxControllerButtons.RightBumper, 1);
+        public InputButton Dash = new InputButton(KeyCode.Keypad0, XboxControllerButtons.X, 1);
+        public InputButton Pull = new InputButton(KeyCode.R, XboxControllerButtons.B, 1);
+        public InputAxis PlayerHorizontal = new InputAxis(KeyCode.D, KeyCode.A, XboxControllerAxes.LeftstickHorizontal, 1);
+        public InputAxis PlayerVertical = new InputAxis(KeyCode.W, KeyCode.S, XboxControllerAxes.LeftstickVertical, 1);
+        public InputAxis AimerHorizontal = new InputAxis(KeyCode.RightArrow, KeyCode.LeftArrow, XboxControllerAxes.RightstickHorizontal, 1);
+        public InputAxis AimerVertical = new InputAxis(KeyCode.UpArrow, KeyCode.DownArrow, XboxControllerAxes.RightstickVertical, 1);
 
         protected bool m_HaveControl = true;
 
@@ -128,14 +127,14 @@ namespace HorseGame
 
         public void SetKeyMap()
         {
-            Pause = new InputButton(KeyCode.Escape, XboxControllerButtons.Menu, playerNum);
-            ThrowRope = new InputButton(KeyCode.E, XboxControllerButtons.Y, playerNum);
-            Dash = new InputButton(KeyCode.K, XboxControllerButtons.X, playerNum);
-            Pull = new InputButton(KeyCode.O, XboxControllerButtons.B, playerNum);
-            PlayerHorizontal = new InputAxis(KeyCode.D, KeyCode.A, XboxControllerAxes.LeftstickHorizontal, playerNum);
-            PlayerVertical = new InputAxis(KeyCode.W, KeyCode.S, XboxControllerAxes.LeftstickVertical, playerNum);
-            AimerHorizontal = new InputAxis(KeyCode.RightArrow, KeyCode.LeftArrow, XboxControllerAxes.RightstickHorizontal, playerNum);
-            AimerVertical = new InputAxis(KeyCode.UpArrow, KeyCode.DownArrow, XboxControllerAxes.RightstickVertical, playerNum);
+            Pause = new InputButton(Pause.key, Pause.controllerButton, playerNum);
+            ThrowRope = new InputButton(ThrowRope.key, ThrowRope.controllerButton, playerNum);
+            Dash = new InputButton(Dash.key, Dash.controllerButton, playerNum);
+            Pull = new InputButton(Pull.key, Pull.controllerButton, playerNum);
+            PlayerHorizontal = new InputAxis(PlayerHorizontal.positive, PlayerHorizontal.negative, PlayerHorizontal.controllerAxis, playerNum);
+            PlayerVertical = new InputAxis(PlayerVertical.positive, PlayerVertical.negative, PlayerVertical.controllerAxis, playerNum);
+            AimerHorizontal = new InputAxis(AimerHorizontal.positive, AimerHorizontal.negative, AimerHorizontal.controllerAxis, playerNum);
+            AimerVertical = new InputAxis(AimerVertical.positive, AimerVertical.negative, AimerVertical.controllerAxis, playerNum);
         }
         void OnGUI()
         {

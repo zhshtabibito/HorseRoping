@@ -20,24 +20,11 @@ public class Player : MonoBehaviour
         Throwing,
     }
 
+    [Header("General Setting")]
     public int playerID;
-    public int score = 0;
+    public float score = 0;
     //public int state = 0;
     public PlayerStatus playerStatus = PlayerStatus.Normal;
-
-    #region Timer
-    public float dashCD = 1f;
-    public float dashTimer = 0f;
-    public bool canDash = true;
-
-    public float pullCD = 1f;
-    public float pullTimer = 0f;
-    public bool canPull = true;
-
-    public float dizzyTime = 1f;
-    public float dizzyTimer = 0f;
-    #endregion
-
     /// <summary>
     /// current maxSpeed
     /// </summary>
@@ -45,15 +32,31 @@ public class Player : MonoBehaviour
     [SerializeField] private float maxSpeed = 3;
     public float lenRope;
 
+    #region Timer
+    [Header("Timer Setting")]
+    public float dashTimer = 0f;
+    public bool canDash = true;
+
+    public float pullTimer = 0f;
+    public bool canPull = true;
+
+    public float dizzyTimer = 0f;
+    #endregion
+
     [Header("Dash Setting")]
     /// <summary>
     /// maxSpeed attenuation
     /// </summary>
     public float dashSpeed;
     public float dashAttenuation = 1;
+    public float dashCD = 1f;
     [Header("Pull Setting")]
     public float pullSpeed;
     public float pullAttenuation = 1;
+    public float pullCD = 1f;
+    [Header("Buff&Debuff Setting")]
+    public float dizzyTime = 1f;
+    public bool isDizzy;
     [Header("ropeObj Setting")]
     [Tooltip("绳索飞行时间 = 比率 * 蓄力时间")]
     public float chargeRatio = 1f;
@@ -69,6 +72,7 @@ public class Player : MonoBehaviour
     protected readonly int m_HashDashPara = Animator.StringToHash("Dash");
     protected readonly int m_HashPullPara = Animator.StringToHash("Pull");
     protected readonly int m_HashDizzyPara = Animator.StringToHash("Dizzy");
+    protected readonly int m_HashRespawnPara = Animator.StringToHash("Respawn");
 
     [SerializeField] protected Vector2 m_MoveVector;
     protected CharacterController2D m_CharacterController2D;
@@ -91,6 +95,11 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (playerInput.Pause.Down)
+        {
+            GameController.Instance.PauseGame();
+        }
+
         #region Player
         curSpeed = curSpeed - dashAttenuation * Time.deltaTime > maxSpeed ? curSpeed - dashAttenuation * Time.deltaTime : maxSpeed;
 
@@ -100,8 +109,8 @@ public class Player : MonoBehaviour
             float mHorizontal, mVertical;
             mHorizontal = playerInput.PlayerHorizontal.Value;
             mVertical = playerInput.PlayerVertical.Value;
-            Debug.Log(playerInput.PlayerVertical.Value);
-            m_MoveVector = new Vector2(mHorizontal, mVertical) * curSpeed;
+            //Debug.Log(playerInput.PlayerHorizontal.Value + "," + playerInput.PlayerVertical.Value);
+            m_MoveVector = new Vector2(mHorizontal, mVertical).normalized * curSpeed;
 
             if (playerInput.ThrowRope.Held &&
                (playerStatus == PlayerStatus.Normal || playerStatus == PlayerStatus.Charging))
@@ -142,10 +151,7 @@ public class Player : MonoBehaviour
         {
             if ((GameController.Instance.horse.transform.position - transform.position).magnitude > rope.maxLength)
             {
-                playerStatus = PlayerStatus.Normal;
-                Debug.Log("ropeObj broken");
-                GetComponentInChildren<Rope>().BreakLine();
-                GameController.Instance.horse.TryStruggle();
+                BreakRope();
                 //StartCoroutine("RopeCD");
             }
             //else if ((GameController.Instance.horse.transform.position - transform.position).magnitude > 0.6f * (aimer.R + lenRope))
@@ -208,6 +214,22 @@ public class Player : MonoBehaviour
                 canPull = true;
             }
         }
+        if (isDizzy)
+        {
+            if (dizzyTimer < dizzyTime)
+            {
+                isDizzy = true;
+                dizzyTimer += Time.deltaTime;
+            }
+            else
+            {
+                dizzyTimer = 0;
+                isDizzy = false;
+                m_Animator.SetBool(m_HashDizzyPara, false);
+                playerStatus = PlayerStatus.Normal;
+                playerInput.GainControl();
+            }
+        }
     }
 
     public void ResetCD()
@@ -216,9 +238,9 @@ public class Player : MonoBehaviour
         pullTimer = 0f;
     }
 
-    public void CleanDebuff()
+    public void CleanAllBuff()
     {
-        dizzyTimer = 0f;
+        ResetCD();
     }
 
     private void FixedUpdate()
@@ -236,102 +258,66 @@ public class Player : MonoBehaviour
     public void BeDizzy()
     {
         //aimer.HideAimer();
-        playerStatus = PlayerStatus.Dizzy;
-        m_Animator.SetBool(m_HashDizzyPara, true);
-        StartCoroutine(Dizzy());
+        if (isDizzy)
+        {
+            dizzyTimer -= dizzyTime;
+        }
+        else
+        {
+            isDizzy = true;
+            playerStatus = PlayerStatus.Dizzy;
+            m_Animator.SetBool(m_HashDizzyPara, true);
+            playerInput.ReleaseControl();
+            m_PlayerAudio.PlayDizzy();
+            BreakRope();
+        }
     }
-
-    IEnumerator Dizzy()
-    {
-        // anime
-        yield return new WaitForSeconds(2);
-        //aimer.ResetAimer();
-        m_Animator.SetBool(m_HashDizzyPara, false);
-        playerStatus = PlayerStatus.Normal;
-    }
-
-    //IEnumerator DashCD()
-    //{
-    //    canDash = false;
-    //    yield return new WaitForSeconds(cdDash);
-    //    canDash = true;
-    //}
-
-    //IEnumerator PullCD()
-    //{
-    //    canPull = false;
-    //    yield return new WaitForSeconds(cdPull);
-    //    canPull = true;
-    //}
-
-    //IEnumerator RopeCD()
-    //{
-    //    canRope = false;
-    //    yield return new WaitForSeconds(cdRope);
-    //    aimer.ResetAimer();
-    //    canRope = true;
-    //}
 
     //Call by event
     public void HitByRope(GameObject gameObject)
     {
+        //Debug.Log(gameObject.GetComponent<Player>().playerID + "," + this.playerID);
+        if (gameObject.GetComponent<Player>().playerID == this.playerID)
+            return;
+        if (playerStatus == PlayerStatus.Roping)
+        {
+            GameController.Instance.horse.TryStruggle();
+        }
         BeDizzy();
     }
 
-    //process result of roping
-    //IEnumerator RopeHorse()
-    //{
-    //    playerStatus = PlayerStatus.Throwing;
-    //    aimer.HideAimer();
-    //    // play anime
-    //    m_PlayerAudio.PlayThrow();
-    //    GetComponentInChildren<ropeObj>().Throw(aimer.CalDelay(), aimer.transform.position - transform.position);
-    //    yield return new WaitForSeconds(aimer.CalDelay());
+    public void Respawn(bool cleanScore)
+    {
+        if (cleanScore)
+            score = 0;
+        curSpeed = maxSpeed;
+        ResetCD();
+        CleanAllBuff();
+        m_Animator.SetTrigger(m_HashRespawnPara);
+        m_MoveVector = Vector2.zero;
+        playerStatus = PlayerStatus.Normal;
+        rope.ResetRope();
+    }
+    public void Respawn(bool cleanScore, Vector2 resetPos)
+    {
+        if (cleanScore)
+            score = 0;
+        ResetCD();
+        CleanAllBuff();
+        m_Animator.SetTrigger(m_HashRespawnPara);
+        m_MoveVector = Vector2.zero;
+        playerStatus = PlayerStatus.Normal;
+        this.gameObject.transform.position = resetPos;
+        aimer.transform.position = resetPos;
+        rope.ResetRope();
+        aimer.ResetAimer();
+    }
 
-    //    Player enemy = GameController.Instance.players[2 - playerID];
-    //    if ((enemy.transform.position - aimer.transform.position).magnitude <= aimer.R)
-    //    {
-    //        // rope player
-    //        playerStatus = PlayerStatus.Normal;
-    //        Debug.Log("Player roped!");
-    //        enemy.BeDizzy();
-    //        enemy.m_Animator.SetBool(m_HashDizzyPara, true);
-    //        enemy.m_PlayerAudio.PlayDize();
-    //        GetComponentInChildren<ropeObj>().BreakLine();
-    //        enemy.GetComponentInChildren<ropeObj>().BreakLine();
-    //        GameController.Instance.horse.state = 0;
-    //        GameController.Instance.HandleHorseState();
-    //        StartCoroutine("RopeCD");
-    //    }
-    //    else if ((GameController.Instance.horse.transform.position - aimer.transform.position).magnitude <= aimer.R)
-    //    {
-    //        // rope horse
-    //        if (GameController.Instance.horse.state == 0) // horse free
-    //        {
-    //            playerStatus = PlayerStatus.Roping;
-    //            Debug.Log("Free Horse roped!");
-    //            GameController.Instance.horse.TryCatch(playerID);
-    //        }
-    //        else // horse roped
-    //        {
-    //            // Player enemy = GameController.players[GameController.horse.state - 1];
-    //            playerStatus = PlayerStatus.Normal;
-    //            Debug.Log("Roped Horse roped!");
-    //            enemy.playerStatus = PlayerStatus.Normal;
-    //            enemy.aimer.ResetAimer();
-    //            enemy.GetComponentInChildren<ropeObj>().BreakLine();
-    //            GameController.Instance.horse.TryStruggle();
-    //            GameController.Instance.HandleHorseState();
-    //            StartCoroutine("RopeCD");
-    //        }
-    //    }
-    //    else // empty
-    //    {
-    //        Debug.Log("Nothing roped!");
-    //        playerStatus = PlayerStatus.Normal;
-    //        GetComponentInChildren<ropeObj>().BreakLine();
-    //        StartCoroutine("RopeCD");
-    //    }
-
-    //}
+    public void BreakRope()
+    {
+        playerStatus = PlayerStatus.Normal;
+        GetComponentInChildren<Rope>().BreakLine();
+        if (GameController.Instance.horse.state == playerID)
+            GameController.Instance.horse.TryStruggle();
+    }
 }

@@ -14,16 +14,11 @@ namespace HorseGame
         public float maxChargeTime = 3f;
         public float curChargeTime = 0f;
 
-        public float R;
-        private readonly float Rmin = 0.3f;
-        private readonly float Rmax = 1.1f;
-        private readonly float spd = 5;
-        private readonly float step = 0.8f; // curSpeed of charging
-
         [SerializeField]
         protected Animator m_Animator;
         protected readonly int m_HashChargingPara = Animator.StringToHash("Charging");
         protected readonly int m_HashEnablePara = Animator.StringToHash("Enable");
+        protected readonly int m_HashResetPara = Animator.StringToHash("Reset");
 
         private void Awake()
         {
@@ -47,10 +42,10 @@ namespace HorseGame
             float UD = Input.GetKey(KeyCode.UpArrow) ? 1 : Input.GetKey(KeyCode.DownArrow) ? -1 : 0;
             ***********************************************/
             // move aimer
-            aHorizontal = player.playerInput.AimerHorizontal.Value;
-            aVertical = player.playerInput.AimerVertical.Value;
+            aHorizontal = /*Input.GetAxis("J1_Horizontal_R");*/player.playerInput.AimerHorizontal.Value;
+            aVertical = /*Input.GetAxis("J1_Vertical_R");*/player.playerInput.AimerVertical.Value;
             //Debug.Log(aHorizontal + ", " + aVertical);
-            transform.position += new Vector3(aHorizontal * moveSpeed * Time.deltaTime, -aVertical * moveSpeed * Time.deltaTime, 0);
+            transform.position += new Vector3(aHorizontal, aVertical, 0).normalized * moveSpeed * Time.deltaTime;
             // limit aimer distance
             Vector3 ropeDirection = transform.position - player.transform.position;
             float mag = ropeDirection.magnitude;
@@ -111,34 +106,8 @@ namespace HorseGame
 
         public void ResetAimer()
         {
-            //Debug.Log("Aimer reset");
-            //R = Rmin;
-            //Vector3 temp = transform.position - new Vector3(R, 0, 0);
-            //arrowL.transform.position = transform.position - new Vector3(R, 0, 0);
-            //arrowR.transform.position = transform.position + new Vector3(R, 0, 0);
-            //GetComponent<SpriteRenderer>().enabled = true;
-            //arrowL.GetComponent<SpriteRenderer>().enabled = true;
-            //arrowR.GetComponent<SpriteRenderer>().enabled = true;
+            curChargeTime = 0f;
+            m_Animator.SetTrigger(m_HashResetPara);
         }
-
-        //public void HideAimer()
-        //{
-        //    GetComponent<SpriteRenderer>().enabled = false;
-        //    arrowL.GetComponent<SpriteRenderer>().enabled = false;
-        //    arrowR.GetComponent<SpriteRenderer>().enabled = false;
-        //}
-
-        //public void AddR()
-        //{
-        //    R += step*Time.deltaTime;
-        //    if (R > Rmax)
-        //        R = Rmax;
-        //}
-
-        //public float CalDelay()
-        //{
-        //    // cal ropeDirection flying throwTime by R
-        //    return 0.8f - 0.2f * (R - Rmin) / step;
-        //}
     }
 }

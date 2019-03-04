@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerAudio : MonoBehaviour
 {
     public AudioClip Throw;
-    public AudioClip Dizz;
+    public AudioClip Dizzy;
 
     public AudioSource audioSource;
     // Start is called before the first frame update
@@ -27,11 +27,11 @@ public class PlayerAudio : MonoBehaviour
             audioSource.PlayOneShot(Throw);
         }
     }
-    public void PlayDize()
+    public void PlayDizzy()
     {
         if (!audioSource.isPlaying)
         {
-            audioSource.PlayOneShot(Dizz);
+            audioSource.PlayOneShot(Dizzy);
         }
     }
 }
